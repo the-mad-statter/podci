@@ -1,0 +1,15 @@
+Package: podci
+Type: Package
+Title: Functions to Score the Pediatric Outcomes Data Collection Instrument
+Version: 0.1.0
+Authors@R: 
+    person(given = "Matthew",
+           family = "Schuelke",
+           role = c("aut", "cre"),
+           email = "schuelke@wustl.edu",
+           comment = c(ORCID = "0000-0001-5755-1725"))
+Description: This package needs work to make it usable.
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
