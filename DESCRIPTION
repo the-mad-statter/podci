@@ -1,0 +1,46 @@
+Package: podci
+Type: Package
+Title: Scoring for the Pediatric Outcomes Data Collection Instrument (PODCI)
+Version: 2.0.0
+Authors@R: 
+    person(given = "Matthew",
+           family = "Schuelke",
+           role = c("aut", "cre"),
+           email = "matt@themadstatter.com",
+           comment = c(ORCID = "0000-0001-5755-1725"))
+Description: The pediatric outcomes data collection instrument (PODCI) is a 
+    patient-reported outcome measure (PROM) developed by the Pediatric 
+    Orthopedic Society of North America to assess functional health status in 
+    children with musculoskeletal disorders. PODCI evaluates functional health 
+    status through an 86 item questionnaire. The pediatric form (2 years to 10 
+    years 11 months) is completed by parents. The adolescent form (11 years to 
+    18 years 11 months) is answered by parents (parent report) and adolescents 
+    (self-report). PODCI consists of scores on five core scales plus a sixth 
+    global scale. Four scales encompass physical function and one assesses 
+    psychological well-being. Physical function core scales include (1) Upper 
+    Extremity and Physical Function (UPEX), which measures ability to perform 
+    activities of daily living with upper extremities, such as lifting books 
+    and turning doorknobs; (2) Transfer and Basic Mobility (TRAN), which 
+    measures ability to perform activities of daily living with lower 
+    extremities and trunk, such as standing, sitting, and transfers; (3) 
+    Sports and Physical Functioning (SPRT), which measures capacity for 
+    physical activity like running and walking more than one mile; and (4) 
+    Pain/Comfort (PAIN), which quantifies pain and its interference with 
+    activities. The psychological well-being core scale is Happiness (HAPY), 
+    which assesses a child’s happiness with physical appearance, capabilities, 
+    and health.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/the-mad-statter/podci
+BugReports: https://github.com/the-mad-statter/podci/issues
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+Imports: 
+    dplyr,
+    rlang
