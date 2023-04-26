@@ -49,9 +49,11 @@ order (See Note).}
 }
 }}
 
-\item{norm_m}{mean value to use when computing normative scores}
+\item{norm_m}{mean value to use when computing normative scores
+(See \link{podci_norms})}
 
-\item{norm_s}{standard deviation value to use when computing normative scores}
+\item{norm_s}{standard deviation value to use when computing normative scores
+(See \link{podci_norms})}
 }
 \value{
 data augmented with the requested score column
@@ -91,11 +93,19 @@ A minimum of 2 items must have valid answers to score this scale.
 }
 \examples{
 podci_pain_raw_ped(podci, podci_items("pain"))
+
 podci_pain_mean_ped(podci, podci_items("pain"))
+
 podci_pain_stnd_ped(podci, podci_items("pain"))
+
 podci_pain_norm_ped(podci, podci_items("pain"))
+
 podci_pain_raw_ado(podci, podci_items("pain"))
+
 podci_pain_mean_ped(podci, podci_items("pain"))
+
 podci_pain_stnd_ped(podci, podci_items("pain"))
+
 podci_pain_norm_ped(podci, podci_items("pain"))
+
 }

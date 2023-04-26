@@ -12,7 +12,9 @@
 #'     * pediatric `[-14, 57]`
 #'     * adolescent `[4, 60]`
 #' @param norm_m mean value to use when computing normative scores
+#' (See [podci_norms])
 #' @param norm_s standard deviation value to use when computing normative scores
+#' (See [podci_norms])
 #'
 #' @note
 #' The scale names listed in `...` are expected to be in this order:
@@ -23,6 +25,7 @@
 #' 1. Q14	His/her health in general?
 #'
 #' @return data augmented with the requested score column
+#' @export
 podci_hapy <- function(
     data,
     ...,
@@ -79,6 +82,7 @@ podci_hapy <- function(
 #' @export
 #' @examples
 #' podci_hapy_raw_ped(podci, podci_items("hapy"))
+#'
 podci_hapy_raw_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -90,6 +94,7 @@ podci_hapy_raw_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_hapy_mean_ped(podci, podci_items("hapy"))
+#'
 podci_hapy_mean_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -101,6 +106,7 @@ podci_hapy_mean_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_hapy_stnd_ped(podci, podci_items("hapy"))
+#'
 podci_hapy_stnd_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -112,6 +118,7 @@ podci_hapy_stnd_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_hapy_norm_ped(podci, podci_items("hapy"))
+#'
 podci_hapy_norm_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -129,6 +136,7 @@ podci_hapy_norm_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_hapy_raw_ado(podci, podci_items("hapy"))
+#'
 podci_hapy_raw_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -140,6 +148,7 @@ podci_hapy_raw_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_hapy_mean_ado(podci, podci_items("hapy"))
+#'
 podci_hapy_mean_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -151,6 +160,7 @@ podci_hapy_mean_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_hapy_stnd_ado(podci, podci_items("hapy"))
+#'
 podci_hapy_stnd_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -162,6 +172,7 @@ podci_hapy_stnd_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_hapy_norm_ado(podci, podci_items("hapy"))
+#'
 podci_hapy_norm_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(

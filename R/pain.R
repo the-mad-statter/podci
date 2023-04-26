@@ -12,7 +12,9 @@
 #'     * pediatric `[-17, 56]`
 #'     * adolescent: `[-1, 57]`
 #' @param norm_m mean value to use when computing normative scores
+#' (See [podci_norms])
 #' @param norm_s standard deviation value to use when computing normative scores
+#' (See [podci_norms])
 #'
 #' @note
 #' The scale names listed in `...` are expected to be in this order:
@@ -24,6 +26,7 @@
 #' A minimum of 2 items must have valid answers to score this scale.
 #'
 #' @return data augmented with the requested score column
+#' @export
 podci_pain <- function(
     data,
     ...,
@@ -79,6 +82,7 @@ podci_pain <- function(
 #' @export
 #' @examples
 #' podci_pain_raw_ped(podci, podci_items("pain"))
+#'
 podci_pain_raw_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -90,6 +94,7 @@ podci_pain_raw_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_pain_mean_ped(podci, podci_items("pain"))
+#'
 podci_pain_mean_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -101,6 +106,7 @@ podci_pain_mean_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_pain_stnd_ped(podci, podci_items("pain"))
+#'
 podci_pain_stnd_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -112,6 +118,7 @@ podci_pain_stnd_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_pain_norm_ped(podci, podci_items("pain"))
+#'
 podci_pain_norm_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -129,6 +136,7 @@ podci_pain_norm_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_pain_raw_ado(podci, podci_items("pain"))
+#'
 podci_pain_raw_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -140,6 +148,7 @@ podci_pain_raw_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_pain_mean_ped(podci, podci_items("pain"))
+#'
 podci_pain_mean_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -151,6 +160,7 @@ podci_pain_mean_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_pain_stnd_ped(podci, podci_items("pain"))
+#'
 podci_pain_stnd_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -162,6 +172,7 @@ podci_pain_stnd_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_pain_norm_ped(podci, podci_items("pain"))
+#'
 podci_pain_norm_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(

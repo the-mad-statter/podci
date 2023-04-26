@@ -15,6 +15,7 @@
 #'
 #' ## pediatric sports normative standard deviation
 #' podci_norms("ped", "sprt", "s")
+#'
 podci_norms <- function(
     pop = c("ped", "ado"),
     scale = c("upex", "tran", "sprt", "pain", "hapy", "glob"),

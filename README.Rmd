@@ -78,7 +78,7 @@ sticker(
 
 ## Overview
 
-The goal of ``r params$package`` is to provide scoring for the Pediatric Outcomes Data Collection Instrument (PODCI).
+The R package ``r params$package`` implements scoring for the Pediatric Outcomes Data Collection Instrument (PODCI).
 
 <br />
 

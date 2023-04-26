@@ -12,7 +12,9 @@
 #'     * pediatric `[-30, 57]`
 #'     * adolescent `[-146, 53]`
 #' @param norm_m mean value to use when computing normative scores
+#' (See [podci_norms])
 #' @param norm_s standard deviation value to use when computing normative scores
+#' (See [podci_norms])
 #'
 #' @note
 #' The scale names listed in `...` are expected to be in this order:
@@ -32,6 +34,7 @@
 #' those marked "too young" as missing).
 #'
 #' @return data augmented with the requested score column
+#' @export
 podci_upex <- function(
     data,
     ...,
@@ -86,6 +89,7 @@ podci_upex <- function(
 #' @export
 #' @examples
 #' podci_upex_raw_ped(podci, podci_items("upex"))
+#'
 podci_upex_raw_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -97,6 +101,7 @@ podci_upex_raw_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_upex_mean_ped(podci, podci_items("upex"))
+#'
 podci_upex_mean_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -108,6 +113,7 @@ podci_upex_mean_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_upex_stnd_ped(podci, podci_items("upex"))
+#'
 podci_upex_stnd_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -119,6 +125,7 @@ podci_upex_stnd_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_upex_norm_ped(podci, podci_items("upex"))
+#'
 podci_upex_norm_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -136,6 +143,7 @@ podci_upex_norm_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_upex_raw_ado(podci, podci_items("upex"))
+#'
 podci_upex_raw_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -147,6 +155,7 @@ podci_upex_raw_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_upex_mean_ado(podci, podci_items("upex"))
+#'
 podci_upex_mean_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -158,6 +167,7 @@ podci_upex_mean_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_upex_stnd_ado(podci, podci_items("upex"))
+#'
 podci_upex_stnd_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -169,6 +179,7 @@ podci_upex_stnd_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_upex_norm_ado(podci, podci_items("upex"))
+#'
 podci_upex_norm_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(

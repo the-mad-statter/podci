@@ -25,8 +25,8 @@ status](https://github.com/the-mad-statter/podci/workflows/R-CMD-check/badge.svg
 
 ## Overview
 
-The goal of `podci` is to provide scoring for the Pediatric Outcomes
-Data Collection Instrument (PODCI).
+The R package `podci` implements scoring for the Pediatric Outcomes Data
+Collection Instrument (PODCI).
 
 <br />
 

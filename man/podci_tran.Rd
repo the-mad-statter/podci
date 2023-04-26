@@ -49,9 +49,11 @@ order (See Note).}
 }
 }}
 
-\item{norm_m}{mean value to use when computing normative scores}
+\item{norm_m}{mean value to use when computing normative scores
+(See \link{podci_norms})}
 
-\item{norm_s}{standard deviation value to use when computing normative scores}
+\item{norm_s}{standard deviation value to use when computing normative scores
+(See \link{podci_norms})}
 }
 \value{
 data augmented with the requested score column
@@ -105,11 +107,19 @@ those marked "too young" as missing).
 }
 \examples{
 podci_tran_raw_ped(podci, podci_items("tran"))
+
 podci_tran_mean_ped(podci, podci_items("tran"))
+
 podci_tran_stnd_ped(podci, podci_items("tran"))
+
 podci_tran_norm_ped(podci, podci_items("tran"))
+
 podci_tran_raw_ado(podci, podci_items("tran"))
+
 podci_tran_mean_ado(podci, podci_items("tran"))
+
 podci_tran_stnd_ado(podci, podci_items("tran"))
+
 podci_tran_norm_ado(podci, podci_items("tran"))
+
 }

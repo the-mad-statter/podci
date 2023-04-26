@@ -49,9 +49,11 @@ order (See Note).}
 }
 }}
 
-\item{norm_m}{mean value to use when computing normative scores}
+\item{norm_m}{mean value to use when computing normative scores
+(See \link{podci_norms})}
 
-\item{norm_s}{standard deviation value to use when computing normative scores}
+\item{norm_s}{standard deviation value to use when computing normative scores
+(See \link{podci_norms})}
 }
 \value{
 data augmented with the requested score column
@@ -90,11 +92,19 @@ The scale names listed in \code{...} are expected to be in this order:
 }
 \examples{
 podci_hapy_raw_ped(podci, podci_items("hapy"))
+
 podci_hapy_mean_ped(podci, podci_items("hapy"))
+
 podci_hapy_stnd_ped(podci, podci_items("hapy"))
+
 podci_hapy_norm_ped(podci, podci_items("hapy"))
+
 podci_hapy_raw_ado(podci, podci_items("hapy"))
+
 podci_hapy_mean_ado(podci, podci_items("hapy"))
+
 podci_hapy_stnd_ado(podci, podci_items("hapy"))
+
 podci_hapy_norm_ado(podci, podci_items("hapy"))
+
 }

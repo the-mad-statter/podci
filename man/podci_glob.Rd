@@ -49,9 +49,11 @@ to be scored}
 }
 }}
 
-\item{norm_m}{mean value to use when computing normative scores}
+\item{norm_m}{mean value to use when computing normative scores
+(See \link{podci_norms})}
 
-\item{norm_s}{standard deviation value to use when computing normative scores}
+\item{norm_s}{standard deviation value to use when computing normative scores
+(See \link{podci_norms})}
 }
 \value{
 data augmented with the requested score column
@@ -71,6 +73,7 @@ PODCI Global Scores
 
 }}
 \examples{
+## podci_glob_stnd_ped()
 podci \%>\%
   podci_upex_stnd_ped(podci_items("upex")) \%>\%
   podci_tran_stnd_ped(podci_items("tran")) \%>\%
@@ -82,6 +85,8 @@ podci \%>\%
     podci_sprt_stnd_ped,
     podci_pain_stnd_ped
   )
+
+## podci_glob_norm_ped()
 podci \%>\%
   podci_upex_stnd_ped(podci_items("upex")) \%>\%
   podci_tran_stnd_ped(podci_items("tran")) \%>\%
@@ -93,6 +98,8 @@ podci \%>\%
     podci_sprt_stnd_ped,
     podci_pain_stnd_ped
   )
+
+## podci_glob_stnd_ado()
 podci \%>\%
   podci_upex_stnd_ado(podci_items("upex")) \%>\%
   podci_tran_stnd_ado(podci_items("tran")) \%>\%
@@ -104,6 +111,8 @@ podci \%>\%
     podci_sprt_stnd_ado,
     podci_pain_stnd_ado
   )
+
+## podci_glob_norm_ado()
 podci \%>\%
   podci_upex_stnd_ado(podci_items("upex")) \%>\%
   podci_tran_stnd_ado(podci_items("tran")) \%>\%
@@ -115,4 +124,5 @@ podci \%>\%
     podci_sprt_stnd_ado,
     podci_pain_stnd_ado
   )
+
 }

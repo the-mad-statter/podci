@@ -12,9 +12,12 @@
 #'     * pediatric `[-77, 58]`
 #'     * adolescent `[-78, 57]`
 #' @param norm_m mean value to use when computing normative scores
+#' (See [podci_norms])
 #' @param norm_s standard deviation value to use when computing normative scores
+#' (See [podci_norms])
 #'
 #' @return data augmented with the requested score column
+#' @export
 podci_glob <- function(
     data,
     upex_stnd, tran_stnd, sprt_stnd, pain_stnd,
@@ -45,6 +48,7 @@ podci_glob <- function(
 #' @describeIn podci_glob PODCI Global Standard Pediatric Score
 #' @export
 #' @examples
+#' ## podci_glob_stnd_ped()
 #' podci %>%
 #'   podci_upex_stnd_ped(podci_items("upex")) %>%
 #'   podci_tran_stnd_ped(podci_items("tran")) %>%
@@ -56,6 +60,7 @@ podci_glob <- function(
 #'     podci_sprt_stnd_ped,
 #'     podci_pain_stnd_ped
 #'   )
+#'
 podci_glob_stnd_ped <- function(
     data,
     upex_stnd,
@@ -78,6 +83,7 @@ podci_glob_stnd_ped <- function(
 #' @describeIn podci_glob PODCI Global Normal Pediatric Score
 #' @export
 #' @examples
+#' ## podci_glob_norm_ped()
 #' podci %>%
 #'   podci_upex_stnd_ped(podci_items("upex")) %>%
 #'   podci_tran_stnd_ped(podci_items("tran")) %>%
@@ -89,6 +95,7 @@ podci_glob_stnd_ped <- function(
 #'     podci_sprt_stnd_ped,
 #'     podci_pain_stnd_ped
 #'   )
+#'
 podci_glob_norm_ped <- function(
     data,
     upex_stnd,
@@ -113,6 +120,7 @@ podci_glob_norm_ped <- function(
 #' @describeIn podci_glob PODCI Global Standard Adolescent Score
 #' @export
 #' @examples
+#' ## podci_glob_stnd_ado()
 #' podci %>%
 #'   podci_upex_stnd_ado(podci_items("upex")) %>%
 #'   podci_tran_stnd_ado(podci_items("tran")) %>%
@@ -124,6 +132,7 @@ podci_glob_norm_ped <- function(
 #'     podci_sprt_stnd_ado,
 #'     podci_pain_stnd_ado
 #'   )
+#'
 podci_glob_stnd_ado <- function(
     data,
     upex_stnd,
@@ -146,6 +155,7 @@ podci_glob_stnd_ado <- function(
 #' @describeIn podci_glob PODCI Global Normal Adolescent Score
 #' @export
 #' @examples
+#' ## podci_glob_norm_ado()
 #' podci %>%
 #'   podci_upex_stnd_ado(podci_items("upex")) %>%
 #'   podci_tran_stnd_ado(podci_items("tran")) %>%
@@ -157,6 +167,7 @@ podci_glob_stnd_ado <- function(
 #'     podci_sprt_stnd_ado,
 #'     podci_pain_stnd_ado
 #'   )
+#'
 podci_glob_norm_ado <- function(
     data,
     upex_stnd,

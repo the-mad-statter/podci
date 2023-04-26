@@ -12,7 +12,9 @@
 #'     * pediatric `[-40, 57]`
 #'     * adolscent: `[-36, 56]`
 #' @param norm_m mean value to use when computing normative scores
+#' (See [podci_norms])
 #' @param norm_s standard deviation value to use when computing normative scores
+#' (See [podci_norms])
 #'
 #' @note
 #' The scale names listed in `...` are expected to be in this order:
@@ -51,6 +53,7 @@
 #' those marked "too young" as missing).
 #'
 #' @return data augmented with the requested score column
+#' @export
 podci_sprt <- function(
     data,
     ...,
@@ -152,6 +155,7 @@ podci_sprt <- function(
 #' @export
 #' @examples
 #' podci_sprt_raw_ped(podci, podci_items("sprt"))
+#'
 podci_sprt_raw_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -163,6 +167,7 @@ podci_sprt_raw_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_sprt_mean_ped(podci, podci_items("sprt"))
+#'
 podci_sprt_mean_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -174,6 +179,7 @@ podci_sprt_mean_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_sprt_stnd_ped(podci, podci_items("sprt"))
+#'
 podci_sprt_stnd_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -185,6 +191,7 @@ podci_sprt_stnd_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_sprt_norm_ped(podci, podci_items("sprt"))
+#'
 podci_sprt_norm_ped <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -202,6 +209,7 @@ podci_sprt_norm_ped <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_sprt_raw_ado(podci, podci_items("sprt"))
+#'
 podci_sprt_raw_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -213,6 +221,7 @@ podci_sprt_raw_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_sprt_mean_ado(podci, podci_items("sprt"))
+#'
 podci_sprt_mean_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -224,6 +233,7 @@ podci_sprt_mean_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_sprt_stnd_ado(podci, podci_items("sprt"))
+#'
 podci_sprt_stnd_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(
@@ -235,6 +245,7 @@ podci_sprt_stnd_ado <- function(data, ...) {
 #' @export
 #' @examples
 #' podci_sprt_norm_ado(podci, podci_items("sprt"))
+#'
 podci_sprt_norm_ado <- function(data, ...) {
   data %>%
     dplyr::mutate(

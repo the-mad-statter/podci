@@ -15,6 +15,7 @@
 #'
 #' ## sport primary and secondary item numbers
 #' podci_items("sprt", "both")
+#'
 podci_items <- function(
     scale = c("upex", "tran", "sprt", "pain", "hapy"),
     type = c("both", "primary", "secondary")) {
