@@ -19,6 +19,7 @@ status](https://github.com/the-mad-statter/podci/workflows/Style/badge.svg)](htt
 status](https://github.com/the-mad-statter/podci/workflows/lint/badge.svg)](https://github.com/the-mad-statter/podci/actions)
 [![R build
 status](https://github.com/the-mad-statter/podci/workflows/test-coverage/badge.svg)](https://github.com/the-mad-statter/podci/actions)
+[![](https://codecov.io/gh/the-mad-statter/podci/branch/main/graph/badge.svg)](https://codecov.io/gh/the-mad-statter/podci)
 [![R build
 status](https://github.com/the-mad-statter/podci/workflows/R-CMD-check/badge.svg)](https://github.com/the-mad-statter/podci/actions)
 <!-- badges: end -->
