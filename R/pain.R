@@ -11,17 +11,35 @@
 #' * normative
 #'     * pediatric `[-17, 56]`
 #'     * adolescent: `[-1, 57]`
+#' @param patient subject of the assessment (pediatric vs adolescent)
+#' @param reporter person providing the responses (parent vs self)
 #' @param norm_m mean value to use when computing normative scores
 #' (See [podci_norms])
 #' @param norm_s standard deviation value to use when computing normative scores
 #' (See [podci_norms])
 #'
 #' @note
-#' The scale names listed in `...` are expected to be in this order:
+#' Pediatric
 #' 1. Q17	Did pain or discomfort interfere with your child’s activities?
 #' 1. Q75	How much pain has your child had during the last week?
 #' 1. Q76	During the last week,  how much did pain interfere with your child’s
 #' normal activities (including at home,  outside of the home,  and at school)?
+#'
+#' A minimum of 2 items must have valid answers to score this scale.
+#'
+#' Adolescent (Parent-Report)
+#' 1. Q17	Did pain or discomfort interfere with your child’s activities?
+#' 1. Q75	How much pain has your child had during the last week?
+#' 1. Q76	During the last week,  how much did pain interfere with your child’s
+#' normal activities (including at home,  outside of the home,  and at school)?
+#'
+#' A minimum of 2 items must have valid answers to score this scale.
+#'
+#' Adolescent (Self-Report)
+#' 1. Q17 Did pain or discomfort interfere with your activities?
+#' 1. Q72 How much pain have you had during the last week?
+#' 1. Q73 During the last week,  how much did pain interfere with your normal
+#' activities (including at home,  outside of the home,  and at school)?
 #'
 #' A minimum of 2 items must have valid answers to score this scale.
 #'
@@ -31,18 +49,33 @@ podci_pain <- function(
     data,
     ...,
     score = c("raw", "mean", "stnd", "norm"),
+    patient = c("ped", "ado"),
+    reporter = c("prnt", "self"),
     norm_m,
     norm_s) {
   score <- match.arg(score)
+  patient <- match.arg(patient)
+  reporter <- match.arg(reporter)
 
   data <- data %>%
     dplyr::select(...) %>%
-    dplyr::rename_with(~ paste0("Q", podci_items("pain"))) %>%
+    dplyr::rename_with(
+      ~ paste0("Q", podci_items("pain", patient, reporter))
+    ) %>%
     dplyr::rowwise() %>%
     dplyr::mutate(
       n_obs = sum(!is.na(dplyr::c_across(dplyr::everything()))),
-      Q17 = ((4 - .data[["Q17"]]) * 4 / 3) + 1,
-      Q75 = ((.data[["Q75"]] - 1) * 4 / 5) + 1,
+      Q17 = ((4 - .data[["Q17"]]) * 4 / 3) + 1
+    )
+
+  if (reporter == "prnt") {
+    data <- data %>% dplyr::mutate(Q75 = ((.data[["Q75"]] - 1) * 4 / 5) + 1)
+  } else {
+    data <- data %>% dplyr::mutate(Q72 = ((.data[["Q72"]] - 1) * 4 / 5) + 1)
+  }
+
+  data <- data %>%
+    dplyr::mutate(
       raw = dplyr::if_else(
         .data[["n_obs"]] >= 2,
         sum(dplyr::c_across(-.data[["n_obs"]]), na.rm = TRUE),
@@ -66,7 +99,7 @@ podci_pain <- function(
 
   if (score %in% c("stnd", "norm")) {
     data <- data %>%
-      dplyr::mutate(stnd = ((4 - .data[["mean"]]) / 3) * 100)
+      dplyr::mutate(stnd = ((4 - (.data[["mean"]] - 1)) / 4) * 100)
   }
 
   if (score == "norm") {
@@ -78,110 +111,197 @@ podci_pain <- function(
     dplyr::pull(!!score)
 }
 
-#' @describeIn podci_pain PODCI Pain Raw Pediatric Score
+#' @describeIn podci_pain Pain Raw Pediatric Parent Score
 #' @export
 #' @examples
-#' podci_pain_raw_ped(podci, podci_items("pain"))
+#' podci_pain_raw_ped_prnt(podci_ped_prnt, podci_items("pain", "ped", "prnt"))
 #'
-podci_pain_raw_ped <- function(data, ...) {
+podci_pain_raw_ped_prnt <- function(data, ...) {
   data %>%
     dplyr::mutate(
-      podci_pain_raw_ped = podci_pain(data, ..., score = "raw")
-    )
-}
-
-#' @describeIn podci_pain PODCI Pain Mean Pediatric Score
-#' @export
-#' @examples
-#' podci_pain_mean_ped(podci, podci_items("pain"))
-#'
-podci_pain_mean_ped <- function(data, ...) {
-  data %>%
-    dplyr::mutate(
-      podci_pain_mean_ped = podci_pain(data, ..., score = "mean")
-    )
-}
-
-#' @describeIn podci_pain PODCI Pain Standard Pediatric Score
-#' @export
-#' @examples
-#' podci_pain_stnd_ped(podci, podci_items("pain"))
-#'
-podci_pain_stnd_ped <- function(data, ...) {
-  data %>%
-    dplyr::mutate(
-      podci_pain_stnd_ped = podci_pain(data, ..., score = "stnd")
-    )
-}
-
-#' @describeIn podci_pain PODCI Pain Normal Pediatric Score
-#' @export
-#' @examples
-#' podci_pain_norm_ped(podci, podci_items("pain"))
-#'
-podci_pain_norm_ped <- function(data, ...) {
-  data %>%
-    dplyr::mutate(
-      podci_pain_norm_ped = podci_pain(
-        data,
-        ...,
-        score = "norm",
-        norm_m = podci_norms("ped", "pain", "m"),
-        norm_s = podci_norms("ped", "pain", "s")
+      podci_pain_raw_ped_prnt = podci_pain(
+        data, ...,
+        score = "raw", patient = "ped", reporter = "prnt"
       )
     )
 }
 
-#' @describeIn podci_pain PODCI Pain Raw Adolescent Score
+#' @describeIn podci_pain Pain Mean Pediatric Parent Score
 #' @export
 #' @examples
-#' podci_pain_raw_ado(podci, podci_items("pain"))
+#' podci_pain_mean_ped_prnt(podci_ped_prnt, podci_items("pain", "ped", "prnt"))
 #'
-podci_pain_raw_ado <- function(data, ...) {
+podci_pain_mean_ped_prnt <- function(data, ...) {
   data %>%
     dplyr::mutate(
-      podci_pain_raw_ado = podci_pain(data, ..., score = "raw")
+      podci_pain_mean_ped_prnt = podci_pain(
+        data, ...,
+        score = "mean", patient = "ped", reporter = "prnt"
+      )
     )
 }
 
-#' @describeIn podci_pain PODCI Pain Mean Adolescent Score
+#' @describeIn podci_pain Pain Standard Pediatric Parent Score
 #' @export
 #' @examples
-#' podci_pain_mean_ped(podci, podci_items("pain"))
+#' podci_pain_stnd_ped_prnt(podci_ped_prnt, podci_items("pain", "ped", "prnt"))
 #'
-podci_pain_mean_ado <- function(data, ...) {
+podci_pain_stnd_ped_prnt <- function(data, ...) {
   data %>%
     dplyr::mutate(
-      podci_pain_mean_ado = podci_pain(data, ..., score = "mean")
+      podci_pain_stnd_ped_prnt = podci_pain(
+        data, ...,
+        score = "stnd", patient = "ped", reporter = "prnt"
+      )
     )
 }
 
-#' @describeIn podci_pain PODCI Pain Standard Adolescent Score
+#' @describeIn podci_pain Pain Normal Pediatric Parent Score
 #' @export
 #' @examples
-#' podci_pain_stnd_ped(podci, podci_items("pain"))
+#' podci_pain_norm_ped_prnt(podci_ped_prnt, podci_items("pain", "ped", "prnt"))
 #'
-podci_pain_stnd_ado <- function(data, ...) {
+podci_pain_norm_ped_prnt <- function(data, ...) {
   data %>%
     dplyr::mutate(
-      podci_pain_stnd_ado = podci_pain(data, ..., score = "stnd")
-    )
-}
-
-#' @describeIn podci_pain PODCI Pain Normal Adolescent Score
-#' @export
-#' @examples
-#' podci_pain_norm_ped(podci, podci_items("pain"))
-#'
-podci_pain_norm_ado <- function(data, ...) {
-  data %>%
-    dplyr::mutate(
-      podci_pain_norm_ado = podci_pain(
+      podci_pain_norm_ped_prnt = podci_pain(
         data,
         ...,
         score = "norm",
-        norm_m = podci_norms("ado", "pain", "m"),
-        norm_s = podci_norms("ado", "pain", "s")
+        patient = "ped",
+        reporter = "prnt",
+        norm_m = podci_norms("pain", "ped", "prnt", "m"),
+        norm_s = podci_norms("pain", "ped", "prnt", "s")
+      )
+    )
+}
+
+#' @describeIn podci_pain Pain Raw Adolescent Parent Score
+#' @export
+#' @examples
+#' podci_pain_raw_ado_prnt(podci_ado_prnt, podci_items("pain", "ado", "prnt"))
+#'
+podci_pain_raw_ado_prnt <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_pain_raw_ado_prnt = podci_pain(
+        data, ...,
+        score = "raw", patient = "ado", reporter = "prnt"
+      )
+    )
+}
+
+#' @describeIn podci_pain Pain Mean Adolescent Parent Score
+#' @export
+#' @examples
+#' podci_pain_mean_ado_prnt(podci_ado_prnt, podci_items("pain", "ado", "prnt"))
+#'
+podci_pain_mean_ado_prnt <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_pain_mean_ado_prnt = podci_pain(
+        data, ...,
+        score = "mean", patient = "ado", reporter = "prnt"
+      )
+    )
+}
+
+#' @describeIn podci_pain Pain Standard Adolescent Parent Score
+#' @export
+#' @examples
+#' podci_pain_stnd_ado_prnt(podci_ado_prnt, podci_items("pain", "ado", "prnt"))
+#'
+podci_pain_stnd_ado_prnt <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_pain_stnd_ado_prnt = podci_pain(
+        data, ...,
+        score = "stnd", patient = "ado", reporter = "prnt"
+      )
+    )
+}
+
+#' @describeIn podci_pain Pain Normal Adolescent Parent Score
+#' @export
+#' @examples
+#' podci_pain_norm_ado_prnt(podci_ado_prnt, podci_items("pain", "ado", "prnt"))
+#'
+podci_pain_norm_ado_prnt <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_pain_norm_ado_prnt = podci_pain(
+        data,
+        ...,
+        score = "norm",
+        patient = "ado",
+        reporter = "prnt",
+        norm_m = podci_norms("pain", "ado", "prnt", "m"),
+        norm_s = podci_norms("pain", "ado", "prnt", "s")
+      )
+    )
+}
+
+#' @describeIn podci_pain Pain Raw Adolescent Self Score
+#' @export
+#' @examples
+#' podci_pain_raw_ado_self(podci_ado_self, podci_items("pain", "ado", "self"))
+#'
+podci_pain_raw_ado_self <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_pain_raw_ado_self = podci_pain(
+        data, ...,
+        score = "raw", patient = "ado", reporter = "self"
+      )
+    )
+}
+
+#' @describeIn podci_pain Pain Mean Adolescent Self Score
+#' @export
+#' @examples
+#' podci_pain_mean_ado_self(podci_ado_self, podci_items("pain", "ado", "self"))
+#'
+podci_pain_mean_ado_self <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_pain_mean_ado_self = podci_pain(
+        data, ...,
+        score = "mean", patient = "ado", reporter = "self"
+      )
+    )
+}
+
+#' @describeIn podci_pain Pain Standard Adolescent Self Score
+#' @export
+#' @examples
+#' podci_pain_stnd_ado_self(podci_ado_self, podci_items("pain", "ado", "self"))
+#'
+podci_pain_stnd_ado_self <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_pain_stnd_ado_self = podci_pain(
+        data, ...,
+        score = "stnd", patient = "ado", reporter = "self"
+      )
+    )
+}
+
+#' @describeIn podci_pain Pain Normal Adolescent Self Score
+#' @export
+#' @examples
+#' podci_pain_norm_ado_self(podci_ado_self, podci_items("pain", "ado", "self"))
+#'
+podci_pain_norm_ado_self <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_pain_norm_ado_self = podci_pain(
+        data,
+        ...,
+        score = "norm",
+        patient = "ado",
+        reporter = "self",
+        norm_m = podci_norms("pain", "ado", "self", "m"),
+        norm_s = podci_norms("pain", "ado", "self", "s")
       )
     )
 }

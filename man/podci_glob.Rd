@@ -2,10 +2,12 @@
 % Please edit documentation in R/glob.R
 \name{podci_glob}
 \alias{podci_glob}
-\alias{podci_glob_stnd_ped}
-\alias{podci_glob_norm_ped}
-\alias{podci_glob_stnd_ado}
-\alias{podci_glob_norm_ado}
+\alias{podci_glob_stnd_ped_prnt}
+\alias{podci_glob_norm_ped_prnt}
+\alias{podci_glob_stnd_ado_prnt}
+\alias{podci_glob_norm_ado_prnt}
+\alias{podci_glob_stnd_ado_self}
+\alias{podci_glob_norm_ado_self}
 \title{PODCI Global Scores}
 \usage{
 podci_glob(
@@ -19,25 +21,66 @@ podci_glob(
   norm_s
 )
 
-podci_glob_stnd_ped(data, upex_stnd, tran_stnd, sprt_stnd, pain_stnd)
+podci_glob_stnd_ped_prnt(
+  data,
+  upex_stnd_ped_prnt,
+  tran_stnd_ped_prnt,
+  sprt_stnd_ped_prnt,
+  pain_stnd_ped_prnt
+)
 
-podci_glob_norm_ped(data, upex_stnd, tran_stnd, sprt_stnd, pain_stnd)
+podci_glob_norm_ped_prnt(
+  data,
+  upex_stnd_ped_prnt,
+  tran_stnd_ped_prnt,
+  sprt_stnd_ped_prnt,
+  pain_stnd_ped_prnt
+)
 
-podci_glob_stnd_ado(data, upex_stnd, tran_stnd, sprt_stnd, pain_stnd)
+podci_glob_stnd_ado_prnt(
+  data,
+  upex_stnd_ado_prnt,
+  tran_stnd_ado_prnt,
+  sprt_stnd_ado_prnt,
+  pain_stnd_ado_prnt
+)
 
-podci_glob_norm_ado(data, upex_stnd, tran_stnd, sprt_stnd, pain_stnd)
+podci_glob_norm_ado_prnt(
+  data,
+  upex_stnd_ado_prnt,
+  tran_stnd_ado_prnt,
+  sprt_stnd_ado_prnt,
+  pain_stnd_ado_prnt
+)
+
+podci_glob_stnd_ado_self(
+  data,
+  upex_stnd_ado_self,
+  tran_stnd_ado_self,
+  sprt_stnd_ado_self,
+  pain_stnd_ado_self
+)
+
+podci_glob_norm_ado_self(
+  data,
+  upex_stnd_ado_self,
+  tran_stnd_ado_self,
+  sprt_stnd_ado_self,
+  pain_stnd_ado_self
+)
 }
 \arguments{
-\item{data}{a \link[dplyr:reexports]{dplyr::tibble} containing the PODCI happy item responses
+\item{data}{a \link[dplyr:reexports]{dplyr::tibble} containing the PODCI upper extremity,
+transfer, sport, and pain standard scores
 to be scored}
 
-\item{upex_stnd}{upper extremity standard score}
+\item{upex_stnd, upex_stnd_ped_prnt, upex_stnd_ado_prnt, upex_stnd_ado_self}{upper extremity standard score}
 
-\item{tran_stnd}{transfer standard score}
+\item{tran_stnd, tran_stnd_ped_prnt, tran_stnd_ado_prnt, tran_stnd_ado_self}{transfer standard score}
 
-\item{sprt_stnd}{sport standard score}
+\item{sprt_stnd, sprt_stnd_ped_prnt, sprt_stnd_ado_prnt, sprt_stnd_ado_self}{sport standard score}
 
-\item{pain_stnd}{pain standard score}
+\item{pain_stnd, pain_stnd_ped_prnt, pain_stnd_ado_prnt, pain_stnd_ado_self}{pain standard score}
 
 \item{score}{requested scale class:
 \itemize{
@@ -63,66 +106,96 @@ PODCI Global Scores
 }
 \section{Functions}{
 \itemize{
-\item \code{podci_glob_stnd_ped()}: PODCI Global Standard Pediatric Score
+\item \code{podci_glob_stnd_ped_prnt()}: Global Standard Pediatric Parent Score
 
-\item \code{podci_glob_norm_ped()}: PODCI Global Normal Pediatric Score
+\item \code{podci_glob_norm_ped_prnt()}: Global Normal Pediatric Parent Score
 
-\item \code{podci_glob_stnd_ado()}: PODCI Global Standard Adolescent Score
+\item \code{podci_glob_stnd_ado_prnt()}: Global Standard Adolescent Parent Score
 
-\item \code{podci_glob_norm_ado()}: PODCI Global Normal Adolescent Score
+\item \code{podci_glob_norm_ado_prnt()}: Global Normal Adolescent Parent Score
+
+\item \code{podci_glob_stnd_ado_self()}: Global Standard Adolescent Self Score
+
+\item \code{podci_glob_norm_ado_self()}: Global Normal Adolescent Self Score
 
 }}
 \examples{
-## podci_glob_stnd_ped()
-podci \%>\%
-  podci_upex_stnd_ped(podci_items("upex")) \%>\%
-  podci_tran_stnd_ped(podci_items("tran")) \%>\%
-  podci_sprt_stnd_ped(podci_items("sprt")) \%>\%
-  podci_pain_stnd_ped(podci_items("pain")) \%>\%
-  podci_glob_stnd_ped(
-    podci_upex_stnd_ped,
-    podci_tran_stnd_ped,
-    podci_sprt_stnd_ped,
-    podci_pain_stnd_ped
+## podci_glob_stnd_ped_prnt()
+podci_ped_prnt \%>\%
+  podci_upex_stnd_ped_prnt(podci_items("upex", "ped", "prnt")) \%>\%
+  podci_tran_stnd_ped_prnt(podci_items("tran", "ped", "prnt")) \%>\%
+  podci_sprt_stnd_ped_prnt(podci_items("sprt", "ped", "prnt")) \%>\%
+  podci_pain_stnd_ped_prnt(podci_items("pain", "ped", "prnt")) \%>\%
+  podci_glob_stnd_ped_prnt(
+    podci_upex_stnd_ped_prnt,
+    podci_tran_stnd_ped_prnt,
+    podci_sprt_stnd_ped_prnt,
+    podci_pain_stnd_ped_prnt
   )
 
-## podci_glob_norm_ped()
-podci \%>\%
-  podci_upex_stnd_ped(podci_items("upex")) \%>\%
-  podci_tran_stnd_ped(podci_items("tran")) \%>\%
-  podci_sprt_stnd_ped(podci_items("sprt")) \%>\%
-  podci_pain_stnd_ped(podci_items("pain")) \%>\%
-  podci_glob_norm_ped(
-    podci_upex_stnd_ped,
-    podci_tran_stnd_ped,
-    podci_sprt_stnd_ped,
-    podci_pain_stnd_ped
+## podci_glob_norm_ped_prnt()
+podci_ped_prnt \%>\%
+  podci_upex_stnd_ped_prnt(podci_items("upex", "ped", "prnt")) \%>\%
+  podci_tran_stnd_ped_prnt(podci_items("tran", "ped", "prnt")) \%>\%
+  podci_sprt_stnd_ped_prnt(podci_items("sprt", "ped", "prnt")) \%>\%
+  podci_pain_stnd_ped_prnt(podci_items("pain", "ped", "prnt")) \%>\%
+  podci_glob_norm_ped_prnt(
+    podci_upex_stnd_ped_prnt,
+    podci_tran_stnd_ped_prnt,
+    podci_sprt_stnd_ped_prnt,
+    podci_pain_stnd_ped_prnt
   )
 
-## podci_glob_stnd_ado()
-podci \%>\%
-  podci_upex_stnd_ado(podci_items("upex")) \%>\%
-  podci_tran_stnd_ado(podci_items("tran")) \%>\%
-  podci_sprt_stnd_ado(podci_items("sprt")) \%>\%
-  podci_pain_stnd_ado(podci_items("pain")) \%>\%
-  podci_glob_stnd_ado(
-    podci_upex_stnd_ado,
-    podci_tran_stnd_ado,
-    podci_sprt_stnd_ado,
-    podci_pain_stnd_ado
+## podci_glob_stnd_ado_prnt()
+podci_ado_prnt \%>\%
+  podci_upex_stnd_ado_prnt(podci_items("upex", "ado", "prnt")) \%>\%
+  podci_tran_stnd_ado_prnt(podci_items("tran", "ado", "prnt")) \%>\%
+  podci_sprt_stnd_ado_prnt(podci_items("sprt", "ado", "prnt")) \%>\%
+  podci_pain_stnd_ado_prnt(podci_items("pain", "ado", "prnt")) \%>\%
+  podci_glob_stnd_ado_prnt(
+    podci_upex_stnd_ado_prnt,
+    podci_tran_stnd_ado_prnt,
+    podci_sprt_stnd_ado_prnt,
+    podci_pain_stnd_ado_prnt
   )
 
-## podci_glob_norm_ado()
-podci \%>\%
-  podci_upex_stnd_ado(podci_items("upex")) \%>\%
-  podci_tran_stnd_ado(podci_items("tran")) \%>\%
-  podci_sprt_stnd_ado(podci_items("sprt")) \%>\%
-  podci_pain_stnd_ado(podci_items("pain")) \%>\%
-  podci_glob_norm_ado(
-    podci_upex_stnd_ado,
-    podci_tran_stnd_ado,
-    podci_sprt_stnd_ado,
-    podci_pain_stnd_ado
+## podci_glob_norm_ado_prnt()
+podci_ado_prnt \%>\%
+  podci_upex_stnd_ado_prnt(podci_items("upex", "ado", "prnt")) \%>\%
+  podci_tran_stnd_ado_prnt(podci_items("tran", "ado", "prnt")) \%>\%
+  podci_sprt_stnd_ado_prnt(podci_items("sprt", "ado", "prnt")) \%>\%
+  podci_pain_stnd_ado_prnt(podci_items("pain", "ado", "prnt")) \%>\%
+  podci_glob_norm_ado_prnt(
+    podci_upex_stnd_ado_prnt,
+    podci_tran_stnd_ado_prnt,
+    podci_sprt_stnd_ado_prnt,
+    podci_pain_stnd_ado_prnt
+  )
+
+## podci_glob_stnd_ado_self()
+podci_ado_self \%>\%
+  podci_upex_stnd_ado_self(podci_items("upex", "ado", "self")) \%>\%
+  podci_tran_stnd_ado_self(podci_items("tran", "ado", "self")) \%>\%
+  podci_sprt_stnd_ado_self(podci_items("sprt", "ado", "self")) \%>\%
+  podci_pain_stnd_ado_self(podci_items("pain", "ado", "self")) \%>\%
+  podci_glob_stnd_ado_self(
+    podci_upex_stnd_ado_self,
+    podci_tran_stnd_ado_self,
+    podci_sprt_stnd_ado_self,
+    podci_pain_stnd_ado_self
+  )
+
+## podci_glob_norm_ado_self()
+podci_ado_self \%>\%
+  podci_upex_stnd_ado_self(podci_items("upex", "ado", "self")) \%>\%
+  podci_tran_stnd_ado_self(podci_items("tran", "ado", "self")) \%>\%
+  podci_sprt_stnd_ado_self(podci_items("sprt", "ado", "self")) \%>\%
+  podci_pain_stnd_ado_self(podci_items("pain", "ado", "self")) \%>\%
+  podci_glob_norm_ado_self(
+    podci_upex_stnd_ado_self,
+    podci_tran_stnd_ado_self,
+    podci_sprt_stnd_ado_self,
+    podci_pain_stnd_ado_self
   )
 
 }

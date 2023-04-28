@@ -2,33 +2,53 @@
 % Please edit documentation in R/pain.R
 \name{podci_pain}
 \alias{podci_pain}
-\alias{podci_pain_raw_ped}
-\alias{podci_pain_mean_ped}
-\alias{podci_pain_stnd_ped}
-\alias{podci_pain_norm_ped}
-\alias{podci_pain_raw_ado}
-\alias{podci_pain_mean_ado}
-\alias{podci_pain_stnd_ado}
-\alias{podci_pain_norm_ado}
+\alias{podci_pain_raw_ped_prnt}
+\alias{podci_pain_mean_ped_prnt}
+\alias{podci_pain_stnd_ped_prnt}
+\alias{podci_pain_norm_ped_prnt}
+\alias{podci_pain_raw_ado_prnt}
+\alias{podci_pain_mean_ado_prnt}
+\alias{podci_pain_stnd_ado_prnt}
+\alias{podci_pain_norm_ado_prnt}
+\alias{podci_pain_raw_ado_self}
+\alias{podci_pain_mean_ado_self}
+\alias{podci_pain_stnd_ado_self}
+\alias{podci_pain_norm_ado_self}
 \title{PODCI Pain Scores}
 \usage{
-podci_pain(data, ..., score = c("raw", "mean", "stnd", "norm"), norm_m, norm_s)
+podci_pain(
+  data,
+  ...,
+  score = c("raw", "mean", "stnd", "norm"),
+  patient = c("ped", "ado"),
+  reporter = c("prnt", "self"),
+  norm_m,
+  norm_s
+)
 
-podci_pain_raw_ped(data, ...)
+podci_pain_raw_ped_prnt(data, ...)
 
-podci_pain_mean_ped(data, ...)
+podci_pain_mean_ped_prnt(data, ...)
 
-podci_pain_stnd_ped(data, ...)
+podci_pain_stnd_ped_prnt(data, ...)
 
-podci_pain_norm_ped(data, ...)
+podci_pain_norm_ped_prnt(data, ...)
 
-podci_pain_raw_ado(data, ...)
+podci_pain_raw_ado_prnt(data, ...)
 
-podci_pain_mean_ado(data, ...)
+podci_pain_mean_ado_prnt(data, ...)
 
-podci_pain_stnd_ado(data, ...)
+podci_pain_stnd_ado_prnt(data, ...)
 
-podci_pain_norm_ado(data, ...)
+podci_pain_norm_ado_prnt(data, ...)
+
+podci_pain_raw_ado_self(data, ...)
+
+podci_pain_mean_ado_self(data, ...)
+
+podci_pain_stnd_ado_self(data, ...)
+
+podci_pain_norm_ado_self(data, ...)
 }
 \arguments{
 \item{data}{a \link[dplyr:reexports]{dplyr::tibble} containing the PODCI pain item responses
@@ -49,6 +69,10 @@ order (See Note).}
 }
 }}
 
+\item{patient}{subject of the assessment (pediatric vs adolescent)}
+
+\item{reporter}{person providing the responses (parent vs self)}
+
 \item{norm_m}{mean value to use when computing normative scores
 (See \link{podci_norms})}
 
@@ -63,25 +87,33 @@ PODCI Pain Scores
 }
 \section{Functions}{
 \itemize{
-\item \code{podci_pain_raw_ped()}: PODCI Pain Raw Pediatric Score
+\item \code{podci_pain_raw_ped_prnt()}: Pain Raw Pediatric Parent Score
 
-\item \code{podci_pain_mean_ped()}: PODCI Pain Mean Pediatric Score
+\item \code{podci_pain_mean_ped_prnt()}: Pain Mean Pediatric Parent Score
 
-\item \code{podci_pain_stnd_ped()}: PODCI Pain Standard Pediatric Score
+\item \code{podci_pain_stnd_ped_prnt()}: Pain Standard Pediatric Parent Score
 
-\item \code{podci_pain_norm_ped()}: PODCI Pain Normal Pediatric Score
+\item \code{podci_pain_norm_ped_prnt()}: Pain Normal Pediatric Parent Score
 
-\item \code{podci_pain_raw_ado()}: PODCI Pain Raw Adolescent Score
+\item \code{podci_pain_raw_ado_prnt()}: Pain Raw Adolescent Parent Score
 
-\item \code{podci_pain_mean_ado()}: PODCI Pain Mean Adolescent Score
+\item \code{podci_pain_mean_ado_prnt()}: Pain Mean Adolescent Parent Score
 
-\item \code{podci_pain_stnd_ado()}: PODCI Pain Standard Adolescent Score
+\item \code{podci_pain_stnd_ado_prnt()}: Pain Standard Adolescent Parent Score
 
-\item \code{podci_pain_norm_ado()}: PODCI Pain Normal Adolescent Score
+\item \code{podci_pain_norm_ado_prnt()}: Pain Normal Adolescent Parent Score
+
+\item \code{podci_pain_raw_ado_self()}: Pain Raw Adolescent Self Score
+
+\item \code{podci_pain_mean_ado_self()}: Pain Mean Adolescent Self Score
+
+\item \code{podci_pain_stnd_ado_self()}: Pain Standard Adolescent Self Score
+
+\item \code{podci_pain_norm_ado_self()}: Pain Normal Adolescent Self Score
 
 }}
 \note{
-The scale names listed in \code{...} are expected to be in this order:
+Pediatric
 \enumerate{
 \item Q17	Did pain or discomfort interfere with your child’s activities?
 \item Q75	How much pain has your child had during the last week?
@@ -90,22 +122,50 @@ normal activities (including at home,  outside of the home,  and at school)?
 }
 
 A minimum of 2 items must have valid answers to score this scale.
+
+Adolescent (Parent-Report)
+\enumerate{
+\item Q17	Did pain or discomfort interfere with your child’s activities?
+\item Q75	How much pain has your child had during the last week?
+\item Q76	During the last week,  how much did pain interfere with your child’s
+normal activities (including at home,  outside of the home,  and at school)?
+}
+
+A minimum of 2 items must have valid answers to score this scale.
+
+Adolescent (Self-Report)
+\enumerate{
+\item Q17 Did pain or discomfort interfere with your activities?
+\item Q72 How much pain have you had during the last week?
+\item Q73 During the last week,  how much did pain interfere with your normal
+activities (including at home,  outside of the home,  and at school)?
+}
+
+A minimum of 2 items must have valid answers to score this scale.
 }
 \examples{
-podci_pain_raw_ped(podci, podci_items("pain"))
+podci_pain_raw_ped_prnt(podci_ped_prnt, podci_items("pain", "ped", "prnt"))
 
-podci_pain_mean_ped(podci, podci_items("pain"))
+podci_pain_mean_ped_prnt(podci_ped_prnt, podci_items("pain", "ped", "prnt"))
 
-podci_pain_stnd_ped(podci, podci_items("pain"))
+podci_pain_stnd_ped_prnt(podci_ped_prnt, podci_items("pain", "ped", "prnt"))
 
-podci_pain_norm_ped(podci, podci_items("pain"))
+podci_pain_norm_ped_prnt(podci_ped_prnt, podci_items("pain", "ped", "prnt"))
 
-podci_pain_raw_ado(podci, podci_items("pain"))
+podci_pain_raw_ado_prnt(podci_ado_prnt, podci_items("pain", "ado", "prnt"))
 
-podci_pain_mean_ped(podci, podci_items("pain"))
+podci_pain_mean_ado_prnt(podci_ado_prnt, podci_items("pain", "ado", "prnt"))
 
-podci_pain_stnd_ped(podci, podci_items("pain"))
+podci_pain_stnd_ado_prnt(podci_ado_prnt, podci_items("pain", "ado", "prnt"))
 
-podci_pain_norm_ped(podci, podci_items("pain"))
+podci_pain_norm_ado_prnt(podci_ado_prnt, podci_items("pain", "ado", "prnt"))
+
+podci_pain_raw_ado_self(podci_ado_self, podci_items("pain", "ado", "self"))
+
+podci_pain_mean_ado_self(podci_ado_self, podci_items("pain", "ado", "self"))
+
+podci_pain_stnd_ado_self(podci_ado_self, podci_items("pain", "ado", "self"))
+
+podci_pain_norm_ado_self(podci_ado_self, podci_items("pain", "ado", "self"))
 
 }

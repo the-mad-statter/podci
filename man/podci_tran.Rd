@@ -2,33 +2,53 @@
 % Please edit documentation in R/tran.R
 \name{podci_tran}
 \alias{podci_tran}
-\alias{podci_tran_raw_ped}
-\alias{podci_tran_mean_ped}
-\alias{podci_tran_stnd_ped}
-\alias{podci_tran_norm_ped}
-\alias{podci_tran_raw_ado}
-\alias{podci_tran_mean_ado}
-\alias{podci_tran_stnd_ado}
-\alias{podci_tran_norm_ado}
+\alias{podci_tran_raw_ped_prnt}
+\alias{podci_tran_mean_ped_prnt}
+\alias{podci_tran_stnd_ped_prnt}
+\alias{podci_tran_norm_ped_prnt}
+\alias{podci_tran_raw_ado_prnt}
+\alias{podci_tran_mean_ado_prnt}
+\alias{podci_tran_stnd_ado_prnt}
+\alias{podci_tran_norm_ado_prnt}
+\alias{podci_tran_raw_ado_self}
+\alias{podci_tran_mean_ado_self}
+\alias{podci_tran_stnd_ado_self}
+\alias{podci_tran_norm_ado_self}
 \title{PODCI Transfer Scores}
 \usage{
-podci_tran(data, ..., score = c("raw", "mean", "stnd", "norm"), norm_m, norm_s)
+podci_tran(
+  data,
+  ...,
+  score = c("raw", "mean", "stnd", "norm"),
+  patient = c("ped", "ado"),
+  reporter = c("prnt", "self"),
+  norm_m,
+  norm_s
+)
 
-podci_tran_raw_ped(data, ...)
+podci_tran_raw_ped_prnt(data, ...)
 
-podci_tran_mean_ped(data, ...)
+podci_tran_mean_ped_prnt(data, ...)
 
-podci_tran_stnd_ped(data, ...)
+podci_tran_stnd_ped_prnt(data, ...)
 
-podci_tran_norm_ped(data, ...)
+podci_tran_norm_ped_prnt(data, ...)
 
-podci_tran_raw_ado(data, ...)
+podci_tran_raw_ado_prnt(data, ...)
 
-podci_tran_mean_ado(data, ...)
+podci_tran_mean_ado_prnt(data, ...)
 
-podci_tran_stnd_ado(data, ...)
+podci_tran_stnd_ado_prnt(data, ...)
 
-podci_tran_norm_ado(data, ...)
+podci_tran_norm_ado_prnt(data, ...)
+
+podci_tran_raw_ado_self(data, ...)
+
+podci_tran_mean_ado_self(data, ...)
+
+podci_tran_stnd_ado_self(data, ...)
+
+podci_tran_norm_ado_self(data, ...)
 }
 \arguments{
 \item{data}{a \link[dplyr:reexports]{dplyr::tibble} containing the PODCI transfer item responses
@@ -49,6 +69,10 @@ order (See Note).}
 }
 }}
 
+\item{patient}{subject of the assessment (pediatric vs adolescent)}
+
+\item{reporter}{person providing the responses (parent vs self)}
+
 \item{norm_m}{mean value to use when computing normative scores
 (See \link{podci_norms})}
 
@@ -63,25 +87,33 @@ PODCI Transfer Scores
 }
 \section{Functions}{
 \itemize{
-\item \code{podci_tran_raw_ped()}: PODCI Transfer Raw Pediatric Score
+\item \code{podci_tran_raw_ped_prnt()}: Transfer Raw Pediatric Parent Score
 
-\item \code{podci_tran_mean_ped()}: PODCI Transfer Mean Pediatric Score
+\item \code{podci_tran_mean_ped_prnt()}: Transfer Mean Pediatric Parent Score
 
-\item \code{podci_tran_stnd_ped()}: PODCI Transfer Standard Pediatric Score
+\item \code{podci_tran_stnd_ped_prnt()}: Transfer Standard Pediatric Parent Score
 
-\item \code{podci_tran_norm_ped()}: PODCI Transfer Normal Pediatric Score
+\item \code{podci_tran_norm_ped_prnt()}: Transfer Normal Pediatric Parent Score
 
-\item \code{podci_tran_raw_ado()}: PODCI Transfer Raw Adolescent Score
+\item \code{podci_tran_raw_ado_prnt()}: Transfer Raw Adolescent Parent Score
 
-\item \code{podci_tran_mean_ado()}: PODCI Transfer Mean Adolescent Score
+\item \code{podci_tran_mean_ado_prnt()}: Transfer Mean Adolescent Parent Score
 
-\item \code{podci_tran_stnd_ado()}: PODCI Transfer Standard Adolescent Score
+\item \code{podci_tran_stnd_ado_prnt()}: Transfer Standard Adolescent Parent Score
 
-\item \code{podci_tran_norm_ado()}: PODCI Transfer Normal Adolescent Score
+\item \code{podci_tran_norm_ado_prnt()}: Transfer Normal Adolescent Parent Score
+
+\item \code{podci_tran_raw_ado_self()}: Transfer Raw Adolescent Self Score
+
+\item \code{podci_tran_mean_ado_self()}: Transfer Mean Adolescent Self Score
+
+\item \code{podci_tran_stnd_ado_self()}: Transfer Standard Adolescent Self Score
+
+\item \code{podci_tran_norm_ado_self()}: Transfer Normal Adolescent Self Score
 
 }}
 \note{
-The scale names listed in \code{...} are expected to be in this order:
+Pediatric
 \enumerate{
 \item Q7	Put on his/her coat?
 \item Q21	Climb one flight of stairs?
@@ -104,22 +136,74 @@ is not added into the scale.
 
 A minimum of 7 items must have valid answers to score this scale (including
 those marked "too young" as missing).
+
+Adolescent (Parent-Report)
+\enumerate{
+\item Q7	Put on his/her coat?
+\item Q21	Climb one flight of stairs?
+\item Q24	Walk one block?
+\item Q25	Get on and off a bus?
+\item Q28	Stand while washing his/her hands and face at a sink?
+\item Q29	Sit in a regular chair without holding on?
+\item Q30	Get on and off a toilet or chair?
+\item Q31	Get in and out of bed?
+\item Q33	Bend over from a standing position and pick up something off the
+floor?
+\item Q34	How often does your child need help from another person for sitting
+and standing?
+\item Q35	How often does your child use assistive devices (such as braces,
+crutches,  or wheelchair) for sitting and standing?
+}
+
+Any item rated "5" (Too young for this activity) is considered missing and
+is not added into the scale.
+
+A minimum of 7 items must have valid answers to score this scale (including
+those marked "too young" as missing).
+
+Adolescent (Self-Report)
+\enumerate{
+\item Q7	Put on your coat?
+\item Q21	Climb one flight of stairs?
+\item Q24	Walk one block?
+\item Q25	Get on and off a bus?
+\item Q28	Stand while washing your hands and face at a sink?
+\item Q29	Sit in a regular chair without holding on?
+\item Q30	Get on and off a toilet or chair?
+\item Q31	Get in and out of bed?
+\item Q33	Bend over from a standing position and pick up something off the
+floor?
+\item Q34	How often do you need help from another person for sitting and
+standing?
+\item Q35	How often do you use assistive devices (such as braces,  crutches,
+or wheelchair) for sitting and standing?
+}
+
+A minimum of 7 items must have valid answers to score this scale.
 }
 \examples{
-podci_tran_raw_ped(podci, podci_items("tran"))
+podci_tran_raw_ped_prnt(podci_ped_prnt, podci_items("tran", "ped", "prnt"))
 
-podci_tran_mean_ped(podci, podci_items("tran"))
+podci_tran_mean_ped_prnt(podci_ped_prnt, podci_items("tran", "ped", "prnt"))
 
-podci_tran_stnd_ped(podci, podci_items("tran"))
+podci_tran_stnd_ped_prnt(podci_ped_prnt, podci_items("tran", "ped", "prnt"))
 
-podci_tran_norm_ped(podci, podci_items("tran"))
+podci_tran_norm_ped_prnt(podci_ped_prnt, podci_items("tran", "ped", "prnt"))
 
-podci_tran_raw_ado(podci, podci_items("tran"))
+podci_tran_raw_ado_prnt(podci_ado_prnt, podci_items("tran", "ado", "prnt"))
 
-podci_tran_mean_ado(podci, podci_items("tran"))
+podci_tran_mean_ado_prnt(podci_ado_prnt, podci_items("tran", "ado", "prnt"))
 
-podci_tran_stnd_ado(podci, podci_items("tran"))
+podci_tran_stnd_ado_prnt(podci_ado_prnt, podci_items("tran", "ado", "prnt"))
 
-podci_tran_norm_ado(podci, podci_items("tran"))
+podci_tran_norm_ado_prnt(podci_ado_prnt, podci_items("tran", "ado", "prnt"))
+
+podci_tran_raw_ado_self(podci_ado_self, podci_items("tran", "ado", "self"))
+
+podci_tran_mean_ado_self(podci_ado_self, podci_items("tran", "ado", "self"))
+
+podci_tran_stnd_ado_self(podci_ado_self, podci_items("tran", "ado", "self"))
+
+podci_tran_norm_ado_self(podci_ado_self, podci_items("tran", "ado", "self"))
 
 }

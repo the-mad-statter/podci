@@ -11,13 +11,15 @@
 #' * normal
 #'     * pediatric `[-30, 57]`
 #'     * adolescent `[-146, 53]`
+#' @param patient subject of the assessment (pediatric vs adolescent)
+#' @param reporter person providing the responses (parent vs self)
 #' @param norm_m mean value to use when computing normative scores
 #' (See [podci_norms])
 #' @param norm_s standard deviation value to use when computing normative scores
 #' (See [podci_norms])
 #'
 #' @note
-#' The scale names listed in `...` are expected to be in this order:
+#' Pediatric
 #' 1. Q1	Lift heavy books?
 #' 1. Q2	Pour a half gallon of milk?
 #' 1. Q3	Open a jar that has been opened before?
@@ -33,22 +35,66 @@
 #' A minimum of 4 items must have valid answers to score this scale (including
 #' those marked "too young" as missing).
 #'
+#' Adolescent (Parent-Report)
+#' 1. Q1	Lift heavy books?
+#' 1. Q2	Pour a half gallon of milk?
+#' 1. Q3	Open a jar that has been opened before?
+#' 1. Q4	Use a fork and spoon?
+#' 1. Q5	Comb his/her hair?
+#' 1. Q6	Button buttons?
+#' 1. Q8	Write with a pencil?
+#' 1. Q32	Turn door knobs?
+#'
+#' Any item rated "5" (Too young for this activity) is considered missing and
+#' is not added into the scale.
+#'
+#' A minimum of 4 items must have valid answers to score this scale (including
+#' those marked "too young" as missing).
+#'
+#' Adolescent (Self-Report)
+#' 1. Q1	Lift heavy books?
+#' 1. Q2	Pour a half gallon of milk?
+#' 1. Q3	Open a jar that has been opened before?
+#' 1. Q4	Use a fork and spoon?
+#' 1. Q5	Comb your hair?
+#' 1. Q6	Button buttons?
+#' 1. Q8	Write with a pencil?
+#' 1. Q32	Turn door knobs?
+#'
+#' A minimum of 4 items must have valid answers to score this scale.
+#'
 #' @return data augmented with the requested score column
 #' @export
 podci_upex <- function(
     data,
     ...,
     score = c("raw", "mean", "stnd", "norm"),
+    patient = c("ped", "ado"),
+    reporter = c("prnt", "self"),
     norm_m,
     norm_s) {
   score <- match.arg(score)
+  patient <- match.arg(patient)
+  reporter <- match.arg(reporter)
 
   data <- data %>%
     dplyr::select(...) %>%
-    dplyr::rename_with(~ paste0("Q", podci_items("upex"))) %>%
-    dplyr::rowwise() %>%
+    dplyr::rename_with(
+      ~ paste0("Q", podci_items("upex", patient, reporter))
+    ) %>%
+    dplyr::rowwise()
+
+  if (reporter == "prnt") {
+    data <- data %>%
+      dplyr::mutate(
+        dplyr::across(
+          dplyr::everything(), ~ dplyr::if_else(. == 5, NA_real_, .)
+        ),
+      )
+  }
+
+  data <- data %>%
     dplyr::mutate(
-      dplyr::across(dplyr::everything(), ~ dplyr::if_else(. == 5, NA_real_, .)),
       n_obs = sum(!is.na(dplyr::c_across(dplyr::everything()))),
       raw = dplyr::if_else(
         .data[["n_obs"]] >= 4,
@@ -85,110 +131,197 @@ podci_upex <- function(
     dplyr::pull(!!score)
 }
 
-#' @describeIn podci_upex PODCI Upper Extremity Raw Pediatric Score
+#' @describeIn podci_upex Upper Extremity Raw Pediatric Parent Score
 #' @export
 #' @examples
-#' podci_upex_raw_ped(podci, podci_items("upex"))
+#' podci_upex_raw_ped_prnt(podci_ped_prnt, podci_items("upex", "ped", "prnt"))
 #'
-podci_upex_raw_ped <- function(data, ...) {
+podci_upex_raw_ped_prnt <- function(data, ...) {
   data %>%
     dplyr::mutate(
-      podci_upex_raw_ped = podci_upex(data, ..., score = "raw")
-    )
-}
-
-#' @describeIn podci_upex PODCI Upper Extremity Mean Pediatric Score
-#' @export
-#' @examples
-#' podci_upex_mean_ped(podci, podci_items("upex"))
-#'
-podci_upex_mean_ped <- function(data, ...) {
-  data %>%
-    dplyr::mutate(
-      podci_upex_mean_ped = podci_upex(data, ..., score = "mean")
-    )
-}
-
-#' @describeIn podci_upex PODCI Upper Extremity Standard Pediatric Score
-#' @export
-#' @examples
-#' podci_upex_stnd_ped(podci, podci_items("upex"))
-#'
-podci_upex_stnd_ped <- function(data, ...) {
-  data %>%
-    dplyr::mutate(
-      podci_upex_stnd_ped = podci_upex(data, ..., score = "stnd")
-    )
-}
-
-#' @describeIn podci_upex PODCI Upper Extremity Normal Pediatric Score
-#' @export
-#' @examples
-#' podci_upex_norm_ped(podci, podci_items("upex"))
-#'
-podci_upex_norm_ped <- function(data, ...) {
-  data %>%
-    dplyr::mutate(
-      podci_upex_norm_ped = podci_upex(
-        data,
-        ...,
-        score = "norm",
-        norm_m = podci_norms("ped", "upex", "m"),
-        norm_s = podci_norms("ped", "upex", "s")
+      podci_upex_raw_ped_prnt = podci_upex(
+        data, ...,
+        score = "raw", patient = "ped", reporter = "prnt"
       )
     )
 }
 
-#' @describeIn podci_upex PODCI Upper Extremity Raw Adolescent Score
+#' @describeIn podci_upex Upper Extremity Mean Pediatric Parent Score
 #' @export
 #' @examples
-#' podci_upex_raw_ado(podci, podci_items("upex"))
+#' podci_upex_mean_ped_prnt(podci_ped_prnt, podci_items("upex", "ped", "prnt"))
 #'
-podci_upex_raw_ado <- function(data, ...) {
+podci_upex_mean_ped_prnt <- function(data, ...) {
   data %>%
     dplyr::mutate(
-      podci_upex_raw_ado = podci_upex(data, ..., score = "raw")
+      podci_upex_mean_ped_prnt = podci_upex(
+        data, ...,
+        score = "mean", patient = "ped", reporter = "prnt"
+      )
     )
 }
 
-#' @describeIn podci_upex PODCI Upper Extremity Mean Adolescent Score
+#' @describeIn podci_upex Upper Extremity Standard Pediatric Parent Score
 #' @export
 #' @examples
-#' podci_upex_mean_ado(podci, podci_items("upex"))
+#' podci_upex_stnd_ped_prnt(podci_ped_prnt, podci_items("upex", "ped", "prnt"))
 #'
-podci_upex_mean_ado <- function(data, ...) {
+podci_upex_stnd_ped_prnt <- function(data, ...) {
   data %>%
     dplyr::mutate(
-      podci_upex_mean_ado = podci_upex(data, ..., score = "mean")
+      podci_upex_stnd_ped_prnt = podci_upex(
+        data, ...,
+        score = "stnd", patient = "ped", reporter = "prnt"
+      )
     )
 }
 
-#' @describeIn podci_upex PODCI Upper Extremity Standard Adolescent Score
+#' @describeIn podci_upex Upper Extremity Normal Pediatric Parent Score
 #' @export
 #' @examples
-#' podci_upex_stnd_ado(podci, podci_items("upex"))
+#' podci_upex_norm_ped_prnt(podci_ped_prnt, podci_items("upex", "ped", "prnt"))
 #'
-podci_upex_stnd_ado <- function(data, ...) {
+podci_upex_norm_ped_prnt <- function(data, ...) {
   data %>%
     dplyr::mutate(
-      podci_upex_stnd_ado = podci_upex(data, ..., score = "stnd")
-    )
-}
-
-#' @describeIn podci_upex PODCI Upper Extremity Normal Adolescent Score
-#' @export
-#' @examples
-#' podci_upex_norm_ado(podci, podci_items("upex"))
-#'
-podci_upex_norm_ado <- function(data, ...) {
-  data %>%
-    dplyr::mutate(
-      podci_upex_norm_ado = podci_upex(
+      podci_upex_norm_ped_prnt = podci_upex(
         data,
         ...,
         score = "norm",
-        norm_m = podci_norms("ado", "upex", "m"),
-        norm_s = podci_norms("ado", "upex", "s")
+        patient = "ped",
+        reporter = "prnt",
+        norm_m = podci_norms("upex", "ped", "prnt", "m"),
+        norm_s = podci_norms("upex", "ped", "prnt", "s")
+      )
+    )
+}
+
+#' @describeIn podci_upex Upper Extremity Raw Adolescent Parent Score
+#' @export
+#' @examples
+#' podci_upex_raw_ado_prnt(podci_ado_prnt, podci_items("upex", "ado", "prnt"))
+#'
+podci_upex_raw_ado_prnt <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_upex_raw_ado_prnt = podci_upex(
+        data, ...,
+        score = "raw", patient = "ado", reporter = "prnt"
+      )
+    )
+}
+
+#' @describeIn podci_upex Upper Extremity Mean Adolescent Parent Score
+#' @export
+#' @examples
+#' podci_upex_mean_ado_prnt(podci_ado_prnt, podci_items("upex", "ado", "prnt"))
+#'
+podci_upex_mean_ado_prnt <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_upex_mean_ado_prnt = podci_upex(
+        data, ...,
+        score = "mean", patient = "ado", reporter = "prnt"
+      )
+    )
+}
+
+#' @describeIn podci_upex Upper Extremity Standard Adolescent Parent Score
+#' @export
+#' @examples
+#' podci_upex_stnd_ado_prnt(podci_ado_prnt, podci_items("upex", "ado", "prnt"))
+#'
+podci_upex_stnd_ado_prnt <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_upex_stnd_ado_prnt = podci_upex(
+        data, ...,
+        score = "stnd", patient = "ado", reporter = "prnt"
+      )
+    )
+}
+
+#' @describeIn podci_upex Upper Extremity Normal Adolescent Parent Score
+#' @export
+#' @examples
+#' podci_upex_norm_ado_prnt(podci_ado_prnt, podci_items("upex", "ado", "prnt"))
+#'
+podci_upex_norm_ado_prnt <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_upex_norm_ado_prnt = podci_upex(
+        data,
+        ...,
+        score = "norm",
+        patient = "ado",
+        reporter = "prnt",
+        norm_m = podci_norms("upex", "ado", "prnt", "m"),
+        norm_s = podci_norms("upex", "ado", "prnt", "s")
+      )
+    )
+}
+
+#' @describeIn podci_upex Upper Extremity Raw Adolescent Self Score
+#' @export
+#' @examples
+#' podci_upex_raw_ado_self(podci_ado_self, podci_items("upex", "ado", "self"))
+#'
+podci_upex_raw_ado_self <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_upex_raw_ado_self = podci_upex(
+        data, ...,
+        score = "raw", patient = "ado", reporter = "self"
+      )
+    )
+}
+
+#' @describeIn podci_upex Upper Extremity Mean Adolescent Self Score
+#' @export
+#' @examples
+#' podci_upex_mean_ado_self(podci_ado_self, podci_items("upex", "ado", "self"))
+#'
+podci_upex_mean_ado_self <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_upex_mean_ado_self = podci_upex(
+        data, ...,
+        score = "mean", patient = "ado", reporter = "self"
+      )
+    )
+}
+
+#' @describeIn podci_upex Upper Extremity Standard Adolescent Self Score
+#' @export
+#' @examples
+#' podci_upex_stnd_ado_self(podci_ado_self, podci_items("upex", "ado", "self"))
+#'
+podci_upex_stnd_ado_self <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_upex_stnd_ado_self = podci_upex(
+        data, ...,
+        score = "stnd", patient = "ado", reporter = "self"
+      )
+    )
+}
+
+#' @describeIn podci_upex Upper Extremity Normal Adolescent Self Score
+#' @export
+#' @examples
+#' podci_upex_norm_ado_self(podci_ado_self, podci_items("upex", "ado", "self"))
+#'
+podci_upex_norm_ado_self <- function(data, ...) {
+  data %>%
+    dplyr::mutate(
+      podci_upex_norm_ado_self = podci_upex(
+        data,
+        ...,
+        score = "norm",
+        patient = "ado",
+        reporter = "self",
+        norm_m = podci_norms("upex", "ado", "self", "m"),
+        norm_s = podci_norms("upex", "ado", "self", "s")
       )
     )
 }

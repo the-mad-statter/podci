@@ -1,71 +1,263 @@
-test_that("podci_tran_raw_ped works", {
+test_that("podci_tran_raw_ped_prnt works", {
   expect_equal(
-    podci_tran_raw_ped(podci, paste0("X", podci_items("tran"))) %>%
-      dplyr::select(dplyr::starts_with("podci")) %>%
-      dplyr::mutate(dplyr::across(dplyr::everything(), ~ round(., digits = 2))),
-    dplyr::tibble(podci_tran_raw_ped = c(9.00, 14.75, 12.00))
+    podci_tran_raw_ped_prnt(
+      podci_ped_prnt, paste0("X", podci_items("tran", "ped", "prnt"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_raw_ped_prnt,
+      10.00,
+      9.75,
+      21.75,
+      11.00,
+      12.00,
+      10.00,
+      11.00,
+      11.00,
+      10.00,
+      27.75
+    )
   )
 })
 
-test_that("podci_tran_mean_ped works", {
+test_that("podci_tran_mean_ped_prnt works", {
   expect_equal(
-    podci_tran_mean_ped(podci, paste0("X", podci_items("tran"))) %>%
-      dplyr::select(dplyr::starts_with("podci")) %>%
-      dplyr::mutate(dplyr::across(dplyr::everything(), ~ round(., digits = 2))),
-    dplyr::tibble(podci_tran_mean_ped = c(1.00, 1.34, 1.09))
+    podci_tran_mean_ped_prnt(
+      podci_ped_prnt, paste0("X", podci_items("tran", "ped", "prnt"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_mean_ped_prnt,
+      1.11,
+      1.08,
+      1.98,
+      1.10,
+      1.20,
+      1.00,
+      1.00,
+      1.00,
+      1.00,
+      2.52
+    )
   )
 })
 
-test_that("podci_tran_stnd_ped works", {
+test_that("podci_tran_stnd_ped_prnt works", {
   expect_equal(
-    podci_tran_stnd_ped(podci, paste0("X", podci_items("tran"))) %>%
-      dplyr::select(dplyr::starts_with("podci")) %>%
-      dplyr::mutate(dplyr::across(dplyr::everything(), ~ round(., digits = 2))),
-    dplyr::tibble(podci_tran_stnd_ped = c(100.00, 88.64, 96.97))
+    podci_tran_stnd_ped_prnt(
+      podci_ped_prnt, paste0("X", podci_items("tran", "ped", "prnt"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_stnd_ped_prnt,
+      96.30,
+      97.22,
+      67.42,
+      96.67,
+      93.33,
+      100.00,
+      100.00,
+      100.00,
+      100.00,
+      49.24
+    )
   )
 })
 
-test_that("podci_tran_norm_ped works", {
+test_that("podci_tran_norm_ped_prnt works", {
   expect_equal(
-    podci_tran_norm_ped(podci, paste0("X", podci_items("tran"))) %>%
-      dplyr::select(dplyr::starts_with("podci")) %>%
-      dplyr::mutate(dplyr::across(dplyr::everything(), ~ round(., digits = 2))),
-    dplyr::tibble(podci_tran_norm_ped = c(52.92, 32.98, 47.61))
+    podci_tran_norm_ped_prnt(
+      podci_ped_prnt, paste0("X", podci_items("tran", "ped", "prnt"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_norm_ped_prnt,
+      46.42,
+      48.05,
+      -4.23,
+      47.07,
+      41.22,
+      52.92,
+      52.92,
+      52.92,
+      52.92,
+      -36.14
+    )
   )
 })
 
-test_that("podci_tran_raw_ado works", {
+test_that("podci_tran_raw_ado_prnt works", {
   expect_equal(
-    podci_tran_raw_ado(podci, paste0("X", podci_items("tran"))) %>%
-      dplyr::select(dplyr::starts_with("podci")) %>%
-      dplyr::mutate(dplyr::across(dplyr::everything(), ~ round(., digits = 2))),
-    dplyr::tibble(podci_tran_raw_ado = c(9.00, 14.75, 12.00))
+    podci_tran_raw_ado_prnt(
+      podci_ado_prnt, paste0("X", podci_items("tran", "ado", "prnt"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_raw_ado_prnt,
+      11.00,
+      12.00,
+      11.00,
+      11.00,
+      11.00,
+      11.00,
+      11.00,
+      11.00,
+      11.00,
+      11.00
+    )
   )
 })
 
-test_that("podci_tran_mean_ado works", {
+test_that("podci_tran_mean_ado_prnt works", {
   expect_equal(
-    podci_tran_mean_ado(podci, paste0("X", podci_items("tran"))) %>%
-      dplyr::select(dplyr::starts_with("podci")) %>%
-      dplyr::mutate(dplyr::across(dplyr::everything(), ~ round(., digits = 2))),
-    dplyr::tibble(podci_tran_mean_ado = c(1.00, 1.34, 1.09))
+    podci_tran_mean_ado_prnt(
+      podci_ado_prnt, paste0("X", podci_items("tran", "ado", "prnt"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_mean_ado_prnt,
+      1.00,
+      1.09,
+      1.00,
+      1.00,
+      1.00,
+      1.00,
+      1.00,
+      1.00,
+      1.00,
+      1.00
+    )
   )
 })
 
-test_that("podci_tran_stnd_ado works", {
+test_that("podci_tran_stnd_ado_prnt works", {
   expect_equal(
-    podci_tran_stnd_ado(podci, paste0("X", podci_items("tran"))) %>%
-      dplyr::select(dplyr::starts_with("podci")) %>%
-      dplyr::mutate(dplyr::across(dplyr::everything(), ~ round(., digits = 2))),
-    dplyr::tibble(podci_tran_stnd_ado = c(100.00, 88.64, 96.97))
+    podci_tran_stnd_ado_prnt(
+      podci_ado_prnt, paste0("X", podci_items("tran", "ado", "prnt"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_stnd_ado_prnt,
+      100.00,
+      96.97,
+      100.00,
+      100.00,
+      100.00,
+      100.00,
+      100.00,
+      100.00,
+      100.00,
+      100.00
+    )
   )
 })
 
-test_that("podci_tran_norm_ado works", {
+test_that("podci_tran_norm_ado_prnt works", {
   expect_equal(
-    podci_tran_norm_ado(podci, paste0("X", podci_items("tran"))) %>%
-      dplyr::select(dplyr::starts_with("podci")) %>%
-      dplyr::mutate(dplyr::across(dplyr::everything(), ~ round(., digits = 2))),
-    dplyr::tibble(podci_tran_norm_ado = c(52.00, 29.27, 45.94))
+    podci_tran_norm_ado_prnt(
+      podci_ado_prnt, paste0("X", podci_items("tran", "ado", "prnt"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_norm_ado_prnt,
+      51.88,
+      45.35,
+      51.88,
+      51.88,
+      51.88,
+      51.88,
+      51.88,
+      51.88,
+      51.88,
+      51.88
+    )
+  )
+})
+
+test_that("podci_tran_raw_ado_self works", {
+  expect_equal(
+    podci_tran_raw_ado_self(
+      podci_ado_self, paste0("X", podci_items("tran", "ado", "self"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_raw_ado_self,
+      12.00,
+      9.00,
+      11.00,
+      11.00,
+      12.00,
+      12.00,
+      11.00,
+      11.00,
+      11.00,
+      11.00
+    )
+  )
+})
+
+test_that("podci_tran_mean_ado_self works", {
+  expect_equal(
+    podci_tran_mean_ado_self(
+      podci_ado_self, paste0("X", podci_items("tran", "ado", "self"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_mean_ado_self,
+      1.09,
+      1.00,
+      1.00,
+      1.00,
+      1.09,
+      1.09,
+      1.00,
+      1.00,
+      1.00,
+      1.00
+    )
+  )
+})
+
+test_that("podci_tran_stnd_ado_self works", {
+  expect_equal(
+    podci_tran_stnd_ado_self(
+      podci_ado_self, paste0("X", podci_items("tran", "ado", "self"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_stnd_ado_self,
+      96.97,
+      100.00,
+      100.00,
+      100.00,
+      96.97,
+      96.97,
+      100.00,
+      100.00,
+      100.00,
+      100.00
+    )
+  )
+})
+
+test_that("podci_tran_norm_ado_self works", {
+  expect_equal(
+    podci_tran_norm_ado_self(
+      podci_ado_self, paste0("X", podci_items("tran", "ado", "self"))
+    ) %>%
+      round_podci_output_for_tests(),
+    dplyr::tribble(
+      ~podci_tran_norm_ado_self,
+      45.35,
+      51.88,
+      51.88,
+      51.88,
+      45.35,
+      45.35,
+      51.88,
+      51.88,
+      51.88,
+      51.88
+    )
   )
 })

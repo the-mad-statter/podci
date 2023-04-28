@@ -2,33 +2,53 @@
 % Please edit documentation in R/upex.R
 \name{podci_upex}
 \alias{podci_upex}
-\alias{podci_upex_raw_ped}
-\alias{podci_upex_mean_ped}
-\alias{podci_upex_stnd_ped}
-\alias{podci_upex_norm_ped}
-\alias{podci_upex_raw_ado}
-\alias{podci_upex_mean_ado}
-\alias{podci_upex_stnd_ado}
-\alias{podci_upex_norm_ado}
+\alias{podci_upex_raw_ped_prnt}
+\alias{podci_upex_mean_ped_prnt}
+\alias{podci_upex_stnd_ped_prnt}
+\alias{podci_upex_norm_ped_prnt}
+\alias{podci_upex_raw_ado_prnt}
+\alias{podci_upex_mean_ado_prnt}
+\alias{podci_upex_stnd_ado_prnt}
+\alias{podci_upex_norm_ado_prnt}
+\alias{podci_upex_raw_ado_self}
+\alias{podci_upex_mean_ado_self}
+\alias{podci_upex_stnd_ado_self}
+\alias{podci_upex_norm_ado_self}
 \title{PODCI Upper Extremity Scores}
 \usage{
-podci_upex(data, ..., score = c("raw", "mean", "stnd", "norm"), norm_m, norm_s)
+podci_upex(
+  data,
+  ...,
+  score = c("raw", "mean", "stnd", "norm"),
+  patient = c("ped", "ado"),
+  reporter = c("prnt", "self"),
+  norm_m,
+  norm_s
+)
 
-podci_upex_raw_ped(data, ...)
+podci_upex_raw_ped_prnt(data, ...)
 
-podci_upex_mean_ped(data, ...)
+podci_upex_mean_ped_prnt(data, ...)
 
-podci_upex_stnd_ped(data, ...)
+podci_upex_stnd_ped_prnt(data, ...)
 
-podci_upex_norm_ped(data, ...)
+podci_upex_norm_ped_prnt(data, ...)
 
-podci_upex_raw_ado(data, ...)
+podci_upex_raw_ado_prnt(data, ...)
 
-podci_upex_mean_ado(data, ...)
+podci_upex_mean_ado_prnt(data, ...)
 
-podci_upex_stnd_ado(data, ...)
+podci_upex_stnd_ado_prnt(data, ...)
 
-podci_upex_norm_ado(data, ...)
+podci_upex_norm_ado_prnt(data, ...)
+
+podci_upex_raw_ado_self(data, ...)
+
+podci_upex_mean_ado_self(data, ...)
+
+podci_upex_stnd_ado_self(data, ...)
+
+podci_upex_norm_ado_self(data, ...)
 }
 \arguments{
 \item{data}{a \link[dplyr:reexports]{dplyr::tibble} containing the PODCI upper extremity item
@@ -49,6 +69,10 @@ in order (See Note).}
 }
 }}
 
+\item{patient}{subject of the assessment (pediatric vs adolescent)}
+
+\item{reporter}{person providing the responses (parent vs self)}
+
 \item{norm_m}{mean value to use when computing normative scores
 (See \link{podci_norms})}
 
@@ -63,25 +87,33 @@ PODCI Upper Extremity Scores
 }
 \section{Functions}{
 \itemize{
-\item \code{podci_upex_raw_ped()}: PODCI Upper Extremity Raw Pediatric Score
+\item \code{podci_upex_raw_ped_prnt()}: Upper Extremity Raw Pediatric Parent Score
 
-\item \code{podci_upex_mean_ped()}: PODCI Upper Extremity Mean Pediatric Score
+\item \code{podci_upex_mean_ped_prnt()}: Upper Extremity Mean Pediatric Parent Score
 
-\item \code{podci_upex_stnd_ped()}: PODCI Upper Extremity Standard Pediatric Score
+\item \code{podci_upex_stnd_ped_prnt()}: Upper Extremity Standard Pediatric Parent Score
 
-\item \code{podci_upex_norm_ped()}: PODCI Upper Extremity Normal Pediatric Score
+\item \code{podci_upex_norm_ped_prnt()}: Upper Extremity Normal Pediatric Parent Score
 
-\item \code{podci_upex_raw_ado()}: PODCI Upper Extremity Raw Adolescent Score
+\item \code{podci_upex_raw_ado_prnt()}: Upper Extremity Raw Adolescent Parent Score
 
-\item \code{podci_upex_mean_ado()}: PODCI Upper Extremity Mean Adolescent Score
+\item \code{podci_upex_mean_ado_prnt()}: Upper Extremity Mean Adolescent Parent Score
 
-\item \code{podci_upex_stnd_ado()}: PODCI Upper Extremity Standard Adolescent Score
+\item \code{podci_upex_stnd_ado_prnt()}: Upper Extremity Standard Adolescent Parent Score
 
-\item \code{podci_upex_norm_ado()}: PODCI Upper Extremity Normal Adolescent Score
+\item \code{podci_upex_norm_ado_prnt()}: Upper Extremity Normal Adolescent Parent Score
+
+\item \code{podci_upex_raw_ado_self()}: Upper Extremity Raw Adolescent Self Score
+
+\item \code{podci_upex_mean_ado_self()}: Upper Extremity Mean Adolescent Self Score
+
+\item \code{podci_upex_stnd_ado_self()}: Upper Extremity Standard Adolescent Self Score
+
+\item \code{podci_upex_norm_ado_self()}: Upper Extremity Normal Adolescent Self Score
 
 }}
 \note{
-The scale names listed in \code{...} are expected to be in this order:
+Pediatric
 \enumerate{
 \item Q1	Lift heavy books?
 \item Q2	Pour a half gallon of milk?
@@ -98,22 +130,62 @@ is not added into the scale.
 
 A minimum of 4 items must have valid answers to score this scale (including
 those marked "too young" as missing).
+
+Adolescent (Parent-Report)
+\enumerate{
+\item Q1	Lift heavy books?
+\item Q2	Pour a half gallon of milk?
+\item Q3	Open a jar that has been opened before?
+\item Q4	Use a fork and spoon?
+\item Q5	Comb his/her hair?
+\item Q6	Button buttons?
+\item Q8	Write with a pencil?
+\item Q32	Turn door knobs?
+}
+
+Any item rated "5" (Too young for this activity) is considered missing and
+is not added into the scale.
+
+A minimum of 4 items must have valid answers to score this scale (including
+those marked "too young" as missing).
+
+Adolescent (Self-Report)
+\enumerate{
+\item Q1	Lift heavy books?
+\item Q2	Pour a half gallon of milk?
+\item Q3	Open a jar that has been opened before?
+\item Q4	Use a fork and spoon?
+\item Q5	Comb your hair?
+\item Q6	Button buttons?
+\item Q8	Write with a pencil?
+\item Q32	Turn door knobs?
+}
+
+A minimum of 4 items must have valid answers to score this scale.
 }
 \examples{
-podci_upex_raw_ped(podci, podci_items("upex"))
+podci_upex_raw_ped_prnt(podci_ped_prnt, podci_items("upex", "ped", "prnt"))
 
-podci_upex_mean_ped(podci, podci_items("upex"))
+podci_upex_mean_ped_prnt(podci_ped_prnt, podci_items("upex", "ped", "prnt"))
 
-podci_upex_stnd_ped(podci, podci_items("upex"))
+podci_upex_stnd_ped_prnt(podci_ped_prnt, podci_items("upex", "ped", "prnt"))
 
-podci_upex_norm_ped(podci, podci_items("upex"))
+podci_upex_norm_ped_prnt(podci_ped_prnt, podci_items("upex", "ped", "prnt"))
 
-podci_upex_raw_ado(podci, podci_items("upex"))
+podci_upex_raw_ado_prnt(podci_ado_prnt, podci_items("upex", "ado", "prnt"))
 
-podci_upex_mean_ado(podci, podci_items("upex"))
+podci_upex_mean_ado_prnt(podci_ado_prnt, podci_items("upex", "ado", "prnt"))
 
-podci_upex_stnd_ado(podci, podci_items("upex"))
+podci_upex_stnd_ado_prnt(podci_ado_prnt, podci_items("upex", "ado", "prnt"))
 
-podci_upex_norm_ado(podci, podci_items("upex"))
+podci_upex_norm_ado_prnt(podci_ado_prnt, podci_items("upex", "ado", "prnt"))
+
+podci_upex_raw_ado_self(podci_ado_self, podci_items("upex", "ado", "self"))
+
+podci_upex_mean_ado_self(podci_ado_self, podci_items("upex", "ado", "self"))
+
+podci_upex_stnd_ado_self(podci_ado_self, podci_items("upex", "ado", "self"))
+
+podci_upex_norm_ado_self(podci_ado_self, podci_items("upex", "ado", "self"))
 
 }

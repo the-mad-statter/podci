@@ -5,12 +5,18 @@
 \title{PODCI Scale Item Numbers}
 \usage{
 podci_items(
-  scale = c("upex", "tran", "sprt", "pain", "hapy"),
+  scale = c("upex", "tran", "sprt", "pain", "hapy", "glob"),
+  patient = c("ped", "ado"),
+  reporter = c("prnt", "self"),
   type = c("both", "primary", "secondary")
 )
 }
 \arguments{
 \item{scale}{requested scale}
+
+\item{patient}{subject of the assessment (pediatric vs adolescent)}
+
+\item{reporter}{person providing the responses (parent vs self)}
 
 \item{type}{the type of item (ignored if not sport scale):
 \itemize{
@@ -26,10 +32,33 @@ a vector of scale items
 PODCI Scale Item Numbers
 }
 \examples{
-## upper extremity item numbers
-podci_items("upex", "both")
+## all scales have the same item numbers except:
 
-## sport primary and secondary item numbers
-podci_items("sprt", "both")
+### the sport scale items differ depending on reporter
+### and has primary and secondary items
+
+podci_items("sprt", reporter = "prnt", type = "both")
+
+podci_items("sprt", reporter = "prnt", type = "primary")
+
+podci_items("sprt", reporter = "prnt", type = "secondary")
+
+podci_items("sprt", reporter = "self", type = "both")
+
+podci_items("sprt", reporter = "self", type = "primary")
+
+podci_items("sprt", reporter = "self", type = "secondary")
+
+### the pain scale items differ depending on reporter
+
+podci_items("pain", reporter = "prnt")
+
+podci_items("pain", reporter = "self")
+
+### the global scale items differ depending on reporter
+
+podci_items("glob", reporter = "prnt")
+
+podci_items("glob", reporter = "self")
 
 }

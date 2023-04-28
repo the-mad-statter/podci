@@ -12,8 +12,7 @@ lhs \%==\% rhs
 \item{rhs}{right hand value}
 }
 \value{
-TRUE if values are equal, FALSE otherwise including treating NA as
-a value
+TRUE if values are equal, FALSE otherwise (treats \code{NA} as a value)
 }
 \description{
 Special Relational Operator

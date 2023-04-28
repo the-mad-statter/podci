@@ -2,33 +2,53 @@
 % Please edit documentation in R/hapy.R
 \name{podci_hapy}
 \alias{podci_hapy}
-\alias{podci_hapy_raw_ped}
-\alias{podci_hapy_mean_ped}
-\alias{podci_hapy_stnd_ped}
-\alias{podci_hapy_norm_ped}
-\alias{podci_hapy_raw_ado}
-\alias{podci_hapy_mean_ado}
-\alias{podci_hapy_stnd_ado}
-\alias{podci_hapy_norm_ado}
+\alias{podci_hapy_raw_ped_prnt}
+\alias{podci_hapy_mean_ped_prnt}
+\alias{podci_hapy_stnd_ped_prnt}
+\alias{podci_hapy_norm_ped_prnt}
+\alias{podci_hapy_raw_ado_prnt}
+\alias{podci_hapy_mean_ado_prnt}
+\alias{podci_hapy_stnd_ado_prnt}
+\alias{podci_hapy_norm_ado_prnt}
+\alias{podci_hapy_raw_ado_self}
+\alias{podci_hapy_mean_ado_self}
+\alias{podci_hapy_stnd_ado_self}
+\alias{podci_hapy_norm_ado_self}
 \title{PODCI Happy Scores}
 \usage{
-podci_hapy(data, ..., score = c("raw", "mean", "stnd", "norm"), norm_m, norm_s)
+podci_hapy(
+  data,
+  ...,
+  score = c("raw", "mean", "stnd", "norm"),
+  patient = c("ped", "ado"),
+  reporter = c("prnt", "self"),
+  norm_m,
+  norm_s
+)
 
-podci_hapy_raw_ped(data, ...)
+podci_hapy_raw_ped_prnt(data, ...)
 
-podci_hapy_mean_ped(data, ...)
+podci_hapy_mean_ped_prnt(data, ...)
 
-podci_hapy_stnd_ped(data, ...)
+podci_hapy_stnd_ped_prnt(data, ...)
 
-podci_hapy_norm_ped(data, ...)
+podci_hapy_norm_ped_prnt(data, ...)
 
-podci_hapy_raw_ado(data, ...)
+podci_hapy_raw_ado_prnt(data, ...)
 
-podci_hapy_mean_ado(data, ...)
+podci_hapy_mean_ado_prnt(data, ...)
 
-podci_hapy_stnd_ado(data, ...)
+podci_hapy_stnd_ado_prnt(data, ...)
 
-podci_hapy_norm_ado(data, ...)
+podci_hapy_norm_ado_prnt(data, ...)
+
+podci_hapy_raw_ado_self(data, ...)
+
+podci_hapy_mean_ado_self(data, ...)
+
+podci_hapy_stnd_ado_self(data, ...)
+
+podci_hapy_norm_ado_self(data, ...)
 }
 \arguments{
 \item{data}{a \link[dplyr:reexports]{dplyr::tibble} containing the PODCI happy item responses
@@ -49,6 +69,10 @@ order (See Note).}
 }
 }}
 
+\item{patient}{subject of the assessment (pediatric vs adolescent)}
+
+\item{reporter}{person providing the responses (parent vs self)}
+
 \item{norm_m}{mean value to use when computing normative scores
 (See \link{podci_norms})}
 
@@ -63,25 +87,33 @@ PODCI Happy Scores
 }
 \section{Functions}{
 \itemize{
-\item \code{podci_hapy_raw_ped()}: PODCI Happy Mean Pediatric Score
+\item \code{podci_hapy_raw_ped_prnt()}: Happy Mean Pediatric Parent Score
 
-\item \code{podci_hapy_mean_ped()}: PODCI Happy Mean Pediatric Score
+\item \code{podci_hapy_mean_ped_prnt()}: Happy Mean Pediatric Parent Score
 
-\item \code{podci_hapy_stnd_ped()}: PODCI Happy Standard Pediatric Score
+\item \code{podci_hapy_stnd_ped_prnt()}: Happy Standard Pediatric Parent Score
 
-\item \code{podci_hapy_norm_ped()}: PODCI Happy Normal Pediatric Score
+\item \code{podci_hapy_norm_ped_prnt()}: Happy Normal Pediatric Parent Score
 
-\item \code{podci_hapy_raw_ado()}: PODCI Happy Mean Adolescent Score
+\item \code{podci_hapy_raw_ado_prnt()}: Happy Mean Adolescent Parent Score
 
-\item \code{podci_hapy_mean_ado()}: PODCI Happy Mean Adolescent Score
+\item \code{podci_hapy_mean_ado_prnt()}: Happy Mean Adolescent Parent Score
 
-\item \code{podci_hapy_stnd_ado()}: PODCI Happy Standard Adolescent Score
+\item \code{podci_hapy_stnd_ado_prnt()}: Happy Standard Adolescent Parent Score
 
-\item \code{podci_hapy_norm_ado()}: PODCI Happy Normal Adolescent Score
+\item \code{podci_hapy_norm_ado_prnt()}: Happy Normal Adolescent Parent Score
+
+\item \code{podci_hapy_raw_ado_self()}: Happy Mean Adolescent Self Score
+
+\item \code{podci_hapy_mean_ado_self()}: Happy Mean Adolescent Self Score
+
+\item \code{podci_hapy_stnd_ado_self()}: Happy Standard Adolescent Self Score
+
+\item \code{podci_hapy_norm_ado_self()}: Happy Normal Adolescent Self Score
 
 }}
 \note{
-The scale names listed in \code{...} are expected to be in this order:
+Pediatric
 \enumerate{
 \item Q10	How he/she looks?
 \item Q11	His/her body?
@@ -89,22 +121,62 @@ The scale names listed in \code{...} are expected to be in this order:
 \item Q13	His/her ability to do the same things his/her friends do?
 \item Q14	His/her health in general?
 }
+
+Any item rated "5" (Too young for this activity) is considered missing and
+is not added into the scale.
+
+A minimum of 3 items must have valid answers to score this scale (including
+those marked "too young" as missing).
+
+Adolescent (Parent-Report)
+\enumerate{
+\item Q10	How he/she looks?
+\item Q11	His/her body?
+\item Q12	What clothes or shoes he/she can wear?
+\item Q13	His/her ability to do the same things his/her friends do?
+\item Q14	His/her health in general?
+}
+
+Any item rated "5" (Too young for this activity) is considered missing and
+is not added into the scale.
+
+A minimum of 3 items must have valid answers to score this scale (including
+those marked "too young" as missing).
+
+Adolescent (Self-Report)
+\enumerate{
+\item Q10	How you look?
+\item Q11	Your body?
+\item Q12	What clothes or shoes you can wear?
+\item Q13	Your ability to do the same things your friends do?
+\item Q14	Your health in general?
+}
+
+A minimum of 3 items must have valid answers to score this scale.
 }
 \examples{
-podci_hapy_raw_ped(podci, podci_items("hapy"))
+podci_hapy_raw_ped_prnt(podci_ped_prnt, podci_items("hapy", "ped", "prnt"))
 
-podci_hapy_mean_ped(podci, podci_items("hapy"))
+podci_hapy_mean_ped_prnt(podci_ped_prnt, podci_items("hapy", "ped", "prnt"))
 
-podci_hapy_stnd_ped(podci, podci_items("hapy"))
+podci_hapy_stnd_ped_prnt(podci_ped_prnt, podci_items("hapy", "ped", "prnt"))
 
-podci_hapy_norm_ped(podci, podci_items("hapy"))
+podci_hapy_norm_ped_prnt(podci_ped_prnt, podci_items("hapy", "ped", "prnt"))
 
-podci_hapy_raw_ado(podci, podci_items("hapy"))
+podci_hapy_raw_ado_prnt(podci_ado_prnt, podci_items("hapy", "ado", "prnt"))
 
-podci_hapy_mean_ado(podci, podci_items("hapy"))
+podci_hapy_mean_ado_prnt(podci_ado_prnt, podci_items("hapy", "ado", "prnt"))
 
-podci_hapy_stnd_ado(podci, podci_items("hapy"))
+podci_hapy_stnd_ado_prnt(podci_ado_prnt, podci_items("hapy", "ado", "prnt"))
 
-podci_hapy_norm_ado(podci, podci_items("hapy"))
+podci_hapy_norm_ado_prnt(podci_ado_prnt, podci_items("hapy", "ado", "prnt"))
+
+podci_hapy_raw_ado_self(podci_ado_self, podci_items("hapy", "ado", "self"))
+
+podci_hapy_mean_ado_self(podci_ado_self, podci_items("hapy", "ado", "self"))
+
+podci_hapy_stnd_ado_self(podci_ado_self, podci_items("hapy", "ado", "self"))
+
+podci_hapy_norm_ado_self(podci_ado_self, podci_items("hapy", "ado", "self"))
 
 }

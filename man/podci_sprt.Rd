@@ -2,33 +2,53 @@
 % Please edit documentation in R/sprt.R
 \name{podci_sprt}
 \alias{podci_sprt}
-\alias{podci_sprt_raw_ped}
-\alias{podci_sprt_mean_ped}
-\alias{podci_sprt_stnd_ped}
-\alias{podci_sprt_norm_ped}
-\alias{podci_sprt_raw_ado}
-\alias{podci_sprt_mean_ado}
-\alias{podci_sprt_stnd_ado}
-\alias{podci_sprt_norm_ado}
+\alias{podci_sprt_raw_ped_prnt}
+\alias{podci_sprt_mean_ped_prnt}
+\alias{podci_sprt_stnd_ped_prnt}
+\alias{podci_sprt_norm_ped_prnt}
+\alias{podci_sprt_raw_ado_prnt}
+\alias{podci_sprt_mean_ado_prnt}
+\alias{podci_sprt_stnd_ado_prnt}
+\alias{podci_sprt_norm_ado_prnt}
+\alias{podci_sprt_raw_ado_self}
+\alias{podci_sprt_mean_ado_self}
+\alias{podci_sprt_stnd_ado_self}
+\alias{podci_sprt_norm_ado_self}
 \title{PODCI Sport Scores}
 \usage{
-podci_sprt(data, ..., score = c("raw", "mean", "stnd", "norm"), norm_m, norm_s)
+podci_sprt(
+  data,
+  ...,
+  score = c("raw", "mean", "stnd", "norm"),
+  patient = c("ped", "ado"),
+  reporter = c("prnt", "self"),
+  norm_m,
+  norm_s
+)
 
-podci_sprt_raw_ped(data, ...)
+podci_sprt_raw_ped_prnt(data, ...)
 
-podci_sprt_mean_ped(data, ...)
+podci_sprt_mean_ped_prnt(data, ...)
 
-podci_sprt_stnd_ped(data, ...)
+podci_sprt_stnd_ped_prnt(data, ...)
 
-podci_sprt_norm_ped(data, ...)
+podci_sprt_norm_ped_prnt(data, ...)
 
-podci_sprt_raw_ado(data, ...)
+podci_sprt_raw_ado_prnt(data, ...)
 
-podci_sprt_mean_ado(data, ...)
+podci_sprt_mean_ado_prnt(data, ...)
 
-podci_sprt_stnd_ado(data, ...)
+podci_sprt_stnd_ado_prnt(data, ...)
 
-podci_sprt_norm_ado(data, ...)
+podci_sprt_norm_ado_prnt(data, ...)
+
+podci_sprt_raw_ado_self(data, ...)
+
+podci_sprt_mean_ado_self(data, ...)
+
+podci_sprt_stnd_ado_self(data, ...)
+
+podci_sprt_norm_ado_self(data, ...)
 }
 \arguments{
 \item{data}{a \link[dplyr:reexports]{dplyr::tibble} containing the PODCI sport item responses
@@ -49,6 +69,10 @@ order (See Note).}
 }
 }}
 
+\item{patient}{subject of the assessment (pediatric vs adolescent)}
+
+\item{reporter}{person providing the responses (parent vs self)}
+
 \item{norm_m}{mean value to use when computing normative scores
 (See \link{podci_norms})}
 
@@ -63,25 +87,33 @@ PODCI Sport Scores
 }
 \section{Functions}{
 \itemize{
-\item \code{podci_sprt_raw_ped()}: PODCI Sport Raw Pediatric Score
+\item \code{podci_sprt_raw_ped_prnt()}: Sport Raw Pediatric Parent Score
 
-\item \code{podci_sprt_mean_ped()}: PODCI Sport Mean Pediatric Score
+\item \code{podci_sprt_mean_ped_prnt()}: Sport Mean Pediatric Parent Score
 
-\item \code{podci_sprt_stnd_ped()}: PODCI Sport Standard Pediatric Score
+\item \code{podci_sprt_stnd_ped_prnt()}: Sport Standard Pediatric Parent Score
 
-\item \code{podci_sprt_norm_ped()}: PODCI Sport Normal Pediatric Score
+\item \code{podci_sprt_norm_ped_prnt()}: Sport Normal Pediatric Parent Score
 
-\item \code{podci_sprt_raw_ado()}: PODCI Sport Raw Adolescent Score
+\item \code{podci_sprt_raw_ado_prnt()}: Sport Raw Adolescent Parent Score
 
-\item \code{podci_sprt_mean_ado()}: PODCI Sport Mean Adolescent Score
+\item \code{podci_sprt_mean_ado_prnt()}: Sport Mean Adolescent Parent Score
 
-\item \code{podci_sprt_stnd_ado()}: PODCI Sport Standard Adolescent Score
+\item \code{podci_sprt_stnd_ado_prnt()}: Sport Standard Adolescent Parent Score
 
-\item \code{podci_sprt_norm_ado()}: PODCI Sport Normal Adolescent Score
+\item \code{podci_sprt_norm_ado_prnt()}: Sport Normal Adolescent Parent Score
+
+\item \code{podci_sprt_raw_ado_self()}: Sport Raw Adolescent Self Score
+
+\item \code{podci_sprt_mean_ado_self()}: Sport Mean Adolescent Self Score
+
+\item \code{podci_sprt_stnd_ado_self()}: Sport Standard Adolescent Self Score
+
+\item \code{podci_sprt_norm_ado_self()}: Sport Normal Adolescent Self Score
 
 }}
 \note{
-The scale names listed in \code{...} are expected to be in this order:
+Pediatric
 \enumerate{
 \item Q18	Run short distances?
 \item Q19	Bicycle or tricycle?
@@ -117,22 +149,97 @@ is not added into the scale.
 
 A minimum of 6 items must have valid answers to score this scale (including
 those marked "too young" as missing).
+
+Adolescent (Parent-Report)
+\enumerate{
+\item Q18	Run short distances?
+\item Q19	Bicycle or tricycle?
+\item Q20	Climb three flights of stairs?
+\item Q22	Walk more than a mile?
+\item Q23	Walk three blocks?
+\item Q26	How often does your child need help from another person for walking
+and climbing?
+\item Q27	How often does your child use assistive devices (such as braces,
+crutches,  or wheelchair) for walking and climbing?
+\item Q36	Can your child participate in recreational outdoor activities with
+other children the same age?
+\item Q42 Too young?
+\item Q43 Activity not in season?
+\item Q44	Can your child participate in pickup games or sports with other
+children the same age?
+\item Q50 Too young?
+\item Q51 Activity not in season?
+\item Q52	Can your child participate in competitive level sports with other
+children the same age?
+\item Q58 Too young?
+\item Q59 Activity not in season?
+\item Q60	How often in the last week did your child get together and do things
+with friends?
+\item Q65 Friends not around?
+\item Q66	How often in the last week did your child participate in gym/recess?
+\item Q72 School not in session?
+\item Q73 Does not attend school?
+}
+
+Any item rated "5" (Too young for this activity) is considered missing and
+is not added into the scale.
+
+A minimum of 6 items must have valid answers to score this scale (including
+those marked "too young" as missing).
+
+Adolescent (Self-Report)
+\enumerate{
+\item Q18	Run short distances?
+\item Q19	Bicycle or tricycle?
+\item Q20	Climb three flights of stairs?
+\item Q22	Walk more than a mile?
+\item Q23	Walk three blocks?
+\item Q26	How often do you need help from another person for walking and
+climbing?
+\item Q27	How often do you use assistive devices (such as braces,  crutches,
+or wheelchair) for walking and climbing?
+\item Q36	Can you participate in recreational outdoor activities with other
+kids the same age?
+\item Q42 Activity not in season?
+\item Q43	Can you participate in pickup games or sports with other kids the
+same age?
+\item Q49 Activity not in season?
+\item Q50 	Can you participate in competitive level sports with other kids the
+same age?
+\item Q56 Activity not in season?
+\item Q57	How often in the last week did your child get together and do things
+with friends?
+\item Q62 Friends not around?
+\item Q63	How often in the last week did you participate in gym/recess?
+\item Q69 School not in session?
+\item Q70 Does not attend school?
+}
+
+A minimum of 6 items must have valid answers to score this scale.
 }
 \examples{
-podci_sprt_raw_ped(podci, podci_items("sprt"))
+podci_sprt_raw_ped_prnt(podci_ped_prnt, podci_items("sprt", "ped", "prnt"))
 
-podci_sprt_mean_ped(podci, podci_items("sprt"))
+podci_sprt_mean_ped_prnt(podci_ped_prnt, podci_items("sprt", "ped", "prnt"))
 
-podci_sprt_stnd_ped(podci, podci_items("sprt"))
+podci_sprt_stnd_ped_prnt(podci_ped_prnt, podci_items("sprt", "ped", "prnt"))
 
-podci_sprt_norm_ped(podci, podci_items("sprt"))
+podci_sprt_norm_ped_prnt(podci_ped_prnt, podci_items("sprt", "ped", "prnt"))
 
-podci_sprt_raw_ado(podci, podci_items("sprt"))
+podci_sprt_raw_ado_prnt(podci_ado_prnt, podci_items("sprt", "ado", "prnt"))
 
-podci_sprt_mean_ado(podci, podci_items("sprt"))
+podci_sprt_mean_ado_prnt(podci_ado_prnt, podci_items("sprt", "ado", "prnt"))
 
-podci_sprt_stnd_ado(podci, podci_items("sprt"))
+podci_sprt_stnd_ado_prnt(podci_ado_prnt, podci_items("sprt", "ado", "prnt"))
 
-podci_sprt_norm_ado(podci, podci_items("sprt"))
+podci_sprt_norm_ado_prnt(podci_ado_prnt, podci_items("sprt", "ado", "prnt"))
+
+podci_sprt_raw_ado_self(podci_ado_self, podci_items("sprt", "ado", "self"))
+
+podci_sprt_mean_ado_self(podci_ado_self, podci_items("sprt", "ado", "self"))
+
+podci_sprt_stnd_ado_self(podci_ado_self, podci_items("sprt", "ado", "self"))
+
+podci_sprt_norm_ado_self(podci_ado_self, podci_items("sprt", "ado", "self"))
 
 }

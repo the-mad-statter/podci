@@ -5,15 +5,18 @@
 \title{PODCI Normative Values}
 \usage{
 podci_norms(
-  pop = c("ped", "ado"),
   scale = c("upex", "tran", "sprt", "pain", "hapy", "glob"),
+  patient = c("ped", "ado"),
+  reporter = c("prnt", "self"),
   stat = c("m", "s")
 )
 }
 \arguments{
-\item{pop}{population}
-
 \item{scale}{requested scale}
+
+\item{patient}{subject of the assessment (pediatric vs adolescent)}
+
+\item{reporter}{person providing the responses (parent vs self)}
 
 \item{stat}{normative mean or standard deviation}
 }
@@ -24,10 +27,13 @@ the requested normative value
 PODCI Normative Values
 }
 \examples{
-## adolescent happiness normative mean
-podci_norms("ado", "hapy", "m")
+## adolescent happiness parent-report normative mean
+podci_norms("hapy", "ado")
 
 ## pediatric sports normative standard deviation
-podci_norms("ped", "sprt", "s")
+podci_norms("sprt", stat = "s")
+
+## adolescent pain self-report normative standard deviation
+podci_norms("pain", "ado", "self", "s")
 
 }

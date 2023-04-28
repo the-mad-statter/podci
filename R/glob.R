@@ -1,11 +1,16 @@
 #' PODCI Global Scores
 #'
-#' @param data a [dplyr::tibble] containing the PODCI happy item responses
+#' @param data a [dplyr::tibble] containing the PODCI upper extremity,
+#' transfer, sport, and pain standard scores
 #' to be scored
-#' @param upex_stnd upper extremity standard score
-#' @param tran_stnd transfer standard score
-#' @param sprt_stnd sport standard score
-#' @param pain_stnd pain standard score
+#' @param upex_stnd,upex_stnd_ped_prnt,upex_stnd_ado_prnt,upex_stnd_ado_self
+#' upper extremity standard score
+#' @param tran_stnd,tran_stnd_ped_prnt,tran_stnd_ado_prnt,tran_stnd_ado_self
+#' transfer standard score
+#' @param sprt_stnd,sprt_stnd_ped_prnt,sprt_stnd_ado_prnt,sprt_stnd_ado_self
+#' sport standard score
+#' @param pain_stnd,pain_stnd_ped_prnt,pain_stnd_ado_prnt,pain_stnd_ado_self
+#'  pain standard score
 #' @param score requested scale class:
 #' * standard `[0, 100]`
 #' * normative
@@ -45,146 +50,218 @@ podci_glob <- function(
     dplyr::pull(!!score)
 }
 
-#' @describeIn podci_glob PODCI Global Standard Pediatric Score
+#' @describeIn podci_glob Global Standard Pediatric Parent Score
 #' @export
 #' @examples
-#' ## podci_glob_stnd_ped()
-#' podci %>%
-#'   podci_upex_stnd_ped(podci_items("upex")) %>%
-#'   podci_tran_stnd_ped(podci_items("tran")) %>%
-#'   podci_sprt_stnd_ped(podci_items("sprt")) %>%
-#'   podci_pain_stnd_ped(podci_items("pain")) %>%
-#'   podci_glob_stnd_ped(
-#'     podci_upex_stnd_ped,
-#'     podci_tran_stnd_ped,
-#'     podci_sprt_stnd_ped,
-#'     podci_pain_stnd_ped
+#' ## podci_glob_stnd_ped_prnt()
+#' podci_ped_prnt %>%
+#'   podci_upex_stnd_ped_prnt(podci_items("upex", "ped", "prnt")) %>%
+#'   podci_tran_stnd_ped_prnt(podci_items("tran", "ped", "prnt")) %>%
+#'   podci_sprt_stnd_ped_prnt(podci_items("sprt", "ped", "prnt")) %>%
+#'   podci_pain_stnd_ped_prnt(podci_items("pain", "ped", "prnt")) %>%
+#'   podci_glob_stnd_ped_prnt(
+#'     podci_upex_stnd_ped_prnt,
+#'     podci_tran_stnd_ped_prnt,
+#'     podci_sprt_stnd_ped_prnt,
+#'     podci_pain_stnd_ped_prnt
 #'   )
 #'
-podci_glob_stnd_ped <- function(
+podci_glob_stnd_ped_prnt <- function(
     data,
-    upex_stnd,
-    tran_stnd,
-    sprt_stnd,
-    pain_stnd) {
+    upex_stnd_ped_prnt,
+    tran_stnd_ped_prnt,
+    sprt_stnd_ped_prnt,
+    pain_stnd_ped_prnt) {
   data %>%
     dplyr::mutate(
-      podci_glob_stnd_ped = podci_glob(
+      podci_glob_stnd_ped_prnt = podci_glob(
         data,
-        {{ upex_stnd }},
-        {{ tran_stnd }},
-        {{ sprt_stnd }},
-        {{ pain_stnd }},
+        {{ upex_stnd_ped_prnt }},
+        {{ tran_stnd_ped_prnt }},
+        {{ sprt_stnd_ped_prnt }},
+        {{ pain_stnd_ped_prnt }},
         "stnd"
       )
     )
 }
 
-#' @describeIn podci_glob PODCI Global Normal Pediatric Score
+#' @describeIn podci_glob Global Normal Pediatric Parent Score
 #' @export
 #' @examples
-#' ## podci_glob_norm_ped()
-#' podci %>%
-#'   podci_upex_stnd_ped(podci_items("upex")) %>%
-#'   podci_tran_stnd_ped(podci_items("tran")) %>%
-#'   podci_sprt_stnd_ped(podci_items("sprt")) %>%
-#'   podci_pain_stnd_ped(podci_items("pain")) %>%
-#'   podci_glob_norm_ped(
-#'     podci_upex_stnd_ped,
-#'     podci_tran_stnd_ped,
-#'     podci_sprt_stnd_ped,
-#'     podci_pain_stnd_ped
+#' ## podci_glob_norm_ped_prnt()
+#' podci_ped_prnt %>%
+#'   podci_upex_stnd_ped_prnt(podci_items("upex", "ped", "prnt")) %>%
+#'   podci_tran_stnd_ped_prnt(podci_items("tran", "ped", "prnt")) %>%
+#'   podci_sprt_stnd_ped_prnt(podci_items("sprt", "ped", "prnt")) %>%
+#'   podci_pain_stnd_ped_prnt(podci_items("pain", "ped", "prnt")) %>%
+#'   podci_glob_norm_ped_prnt(
+#'     podci_upex_stnd_ped_prnt,
+#'     podci_tran_stnd_ped_prnt,
+#'     podci_sprt_stnd_ped_prnt,
+#'     podci_pain_stnd_ped_prnt
 #'   )
 #'
-podci_glob_norm_ped <- function(
+podci_glob_norm_ped_prnt <- function(
     data,
-    upex_stnd,
-    tran_stnd,
-    sprt_stnd,
-    pain_stnd) {
+    upex_stnd_ped_prnt,
+    tran_stnd_ped_prnt,
+    sprt_stnd_ped_prnt,
+    pain_stnd_ped_prnt) {
   data %>%
     dplyr::mutate(
-      podci_glob_norm_ped = podci_glob(
+      podci_glob_norm_ped_prnt = podci_glob(
         data,
-        {{ upex_stnd }},
-        {{ tran_stnd }},
-        {{ sprt_stnd }},
-        {{ pain_stnd }},
+        {{ upex_stnd_ped_prnt }},
+        {{ tran_stnd_ped_prnt }},
+        {{ sprt_stnd_ped_prnt }},
+        {{ pain_stnd_ped_prnt }},
         "norm",
-        podci_norms("ped", "glob", "m"),
-        podci_norms("ped", "glob", "s")
+        podci_norms("glob", "ped", "prnt", "m"),
+        podci_norms("glob", "ped", "prnt", "s")
       )
     )
 }
 
-#' @describeIn podci_glob PODCI Global Standard Adolescent Score
+#' @describeIn podci_glob Global Standard Adolescent Parent Score
 #' @export
 #' @examples
-#' ## podci_glob_stnd_ado()
-#' podci %>%
-#'   podci_upex_stnd_ado(podci_items("upex")) %>%
-#'   podci_tran_stnd_ado(podci_items("tran")) %>%
-#'   podci_sprt_stnd_ado(podci_items("sprt")) %>%
-#'   podci_pain_stnd_ado(podci_items("pain")) %>%
-#'   podci_glob_stnd_ado(
-#'     podci_upex_stnd_ado,
-#'     podci_tran_stnd_ado,
-#'     podci_sprt_stnd_ado,
-#'     podci_pain_stnd_ado
+#' ## podci_glob_stnd_ado_prnt()
+#' podci_ado_prnt %>%
+#'   podci_upex_stnd_ado_prnt(podci_items("upex", "ado", "prnt")) %>%
+#'   podci_tran_stnd_ado_prnt(podci_items("tran", "ado", "prnt")) %>%
+#'   podci_sprt_stnd_ado_prnt(podci_items("sprt", "ado", "prnt")) %>%
+#'   podci_pain_stnd_ado_prnt(podci_items("pain", "ado", "prnt")) %>%
+#'   podci_glob_stnd_ado_prnt(
+#'     podci_upex_stnd_ado_prnt,
+#'     podci_tran_stnd_ado_prnt,
+#'     podci_sprt_stnd_ado_prnt,
+#'     podci_pain_stnd_ado_prnt
 #'   )
 #'
-podci_glob_stnd_ado <- function(
+podci_glob_stnd_ado_prnt <- function(
     data,
-    upex_stnd,
-    tran_stnd,
-    sprt_stnd,
-    pain_stnd) {
+    upex_stnd_ado_prnt,
+    tran_stnd_ado_prnt,
+    sprt_stnd_ado_prnt,
+    pain_stnd_ado_prnt) {
   data %>%
     dplyr::mutate(
-      podci_glob_stnd_ado = podci_glob(
+      podci_glob_stnd_ado_prnt = podci_glob(
         data,
-        {{ upex_stnd }},
-        {{ tran_stnd }},
-        {{ sprt_stnd }},
-        {{ pain_stnd }},
+        {{ upex_stnd_ado_prnt }},
+        {{ tran_stnd_ado_prnt }},
+        {{ sprt_stnd_ado_prnt }},
+        {{ pain_stnd_ado_prnt }},
         "stnd"
       )
     )
 }
 
-#' @describeIn podci_glob PODCI Global Normal Adolescent Score
+#' @describeIn podci_glob Global Normal Adolescent Parent Score
 #' @export
 #' @examples
-#' ## podci_glob_norm_ado()
-#' podci %>%
-#'   podci_upex_stnd_ado(podci_items("upex")) %>%
-#'   podci_tran_stnd_ado(podci_items("tran")) %>%
-#'   podci_sprt_stnd_ado(podci_items("sprt")) %>%
-#'   podci_pain_stnd_ado(podci_items("pain")) %>%
-#'   podci_glob_norm_ado(
-#'     podci_upex_stnd_ado,
-#'     podci_tran_stnd_ado,
-#'     podci_sprt_stnd_ado,
-#'     podci_pain_stnd_ado
+#' ## podci_glob_norm_ado_prnt()
+#' podci_ado_prnt %>%
+#'   podci_upex_stnd_ado_prnt(podci_items("upex", "ado", "prnt")) %>%
+#'   podci_tran_stnd_ado_prnt(podci_items("tran", "ado", "prnt")) %>%
+#'   podci_sprt_stnd_ado_prnt(podci_items("sprt", "ado", "prnt")) %>%
+#'   podci_pain_stnd_ado_prnt(podci_items("pain", "ado", "prnt")) %>%
+#'   podci_glob_norm_ado_prnt(
+#'     podci_upex_stnd_ado_prnt,
+#'     podci_tran_stnd_ado_prnt,
+#'     podci_sprt_stnd_ado_prnt,
+#'     podci_pain_stnd_ado_prnt
 #'   )
 #'
-podci_glob_norm_ado <- function(
+podci_glob_norm_ado_prnt <- function(
     data,
-    upex_stnd,
-    tran_stnd,
-    sprt_stnd,
-    pain_stnd) {
+    upex_stnd_ado_prnt,
+    tran_stnd_ado_prnt,
+    sprt_stnd_ado_prnt,
+    pain_stnd_ado_prnt) {
   data %>%
     dplyr::mutate(
-      podci_glob_norm_ado = podci_glob(
+      podci_glob_norm_ado_prnt = podci_glob(
         data,
-        {{ upex_stnd }},
-        {{ tran_stnd }},
-        {{ sprt_stnd }},
-        {{ pain_stnd }},
+        {{ upex_stnd_ado_prnt }},
+        {{ tran_stnd_ado_prnt }},
+        {{ sprt_stnd_ado_prnt }},
+        {{ pain_stnd_ado_prnt }},
         "norm",
-        podci_norms("ado", "glob", "m"),
-        podci_norms("ado", "glob", "s")
+        podci_norms("glob", "ado", "prnt", "m"),
+        podci_norms("glob", "ado", "prnt", "s")
+      )
+    )
+}
+
+#' @describeIn podci_glob Global Standard Adolescent Self Score
+#' @export
+#' @examples
+#' ## podci_glob_stnd_ado_self()
+#' podci_ado_self %>%
+#'   podci_upex_stnd_ado_self(podci_items("upex", "ado", "self")) %>%
+#'   podci_tran_stnd_ado_self(podci_items("tran", "ado", "self")) %>%
+#'   podci_sprt_stnd_ado_self(podci_items("sprt", "ado", "self")) %>%
+#'   podci_pain_stnd_ado_self(podci_items("pain", "ado", "self")) %>%
+#'   podci_glob_stnd_ado_self(
+#'     podci_upex_stnd_ado_self,
+#'     podci_tran_stnd_ado_self,
+#'     podci_sprt_stnd_ado_self,
+#'     podci_pain_stnd_ado_self
+#'   )
+#'
+podci_glob_stnd_ado_self <- function(
+    data,
+    upex_stnd_ado_self,
+    tran_stnd_ado_self,
+    sprt_stnd_ado_self,
+    pain_stnd_ado_self) {
+  data %>%
+    dplyr::mutate(
+      podci_glob_stnd_ado_self = podci_glob(
+        data,
+        {{ upex_stnd_ado_self }},
+        {{ tran_stnd_ado_self }},
+        {{ sprt_stnd_ado_self }},
+        {{ pain_stnd_ado_self }},
+        "stnd"
+      )
+    )
+}
+
+#' @describeIn podci_glob Global Normal Adolescent Self Score
+#' @export
+#' @examples
+#' ## podci_glob_norm_ado_self()
+#' podci_ado_self %>%
+#'   podci_upex_stnd_ado_self(podci_items("upex", "ado", "self")) %>%
+#'   podci_tran_stnd_ado_self(podci_items("tran", "ado", "self")) %>%
+#'   podci_sprt_stnd_ado_self(podci_items("sprt", "ado", "self")) %>%
+#'   podci_pain_stnd_ado_self(podci_items("pain", "ado", "self")) %>%
+#'   podci_glob_norm_ado_self(
+#'     podci_upex_stnd_ado_self,
+#'     podci_tran_stnd_ado_self,
+#'     podci_sprt_stnd_ado_self,
+#'     podci_pain_stnd_ado_self
+#'   )
+#'
+podci_glob_norm_ado_self <- function(
+    data,
+    upex_stnd_ado_self,
+    tran_stnd_ado_self,
+    sprt_stnd_ado_self,
+    pain_stnd_ado_self) {
+  data %>%
+    dplyr::mutate(
+      podci_glob_norm_ado_self = podci_glob(
+        data,
+        {{ upex_stnd_ado_self }},
+        {{ tran_stnd_ado_self }},
+        {{ sprt_stnd_ado_self }},
+        {{ pain_stnd_ado_self }},
+        "norm",
+        podci_norms("glob", "ado", "self", "m"),
+        podci_norms("glob", "ado", "self", "s")
       )
     )
 }
