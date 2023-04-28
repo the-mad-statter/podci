@@ -5,7 +5,7 @@
 \alias{podci_ado_self}
 \title{PODCI Adolescent Self-Report Example Data}
 \format{
-A 3 x 83 \link[dplyr:reexports]{dplyr::tibble}
+A 10 x 83 \link[dplyr:reexports]{dplyr::tibble}
 \enumerate{
 \item During the last week, was it easy or hard for you to: Lift heavy books?
 \itemize{

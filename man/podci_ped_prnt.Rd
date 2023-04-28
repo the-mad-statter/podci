@@ -5,7 +5,7 @@
 \alias{podci_ped_prnt}
 \title{PODCI Pediatric Parent-Report Example Data}
 \format{
-A 3 x 86 \link[dplyr:reexports]{dplyr::tibble}
+A 10 x 86 \link[dplyr:reexports]{dplyr::tibble}
 \enumerate{
 \item During last week, easy/hard to: Lift heavy books?
 \itemize{

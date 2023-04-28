@@ -6,7 +6,7 @@
 #' Example Pediatric Parent-Reported Outcome Data Collection Instrument (PODCI) Data
 #'
 #' @format
-#' A 3 x 86 [dplyr::tibble]
+#' A 10 x 86 [dplyr::tibble]
 #'
 #' 1. During last week, easy/hard to: Lift heavy books?
 #'     * 1, Easy | 2, A little hard | 3, Very hard | 4, Can't do at all | 5, Too young for this activity
@@ -188,7 +188,7 @@
 #' Example Adolescent Parent-Reported Outcome Data Collection Instrument (PODCI) Data
 #'
 #' @format
-#' A 3 x 86 [dplyr::tibble]
+#' A 10 x 86 [dplyr::tibble]
 #'
 #' 1. During last week, easy/hard to: Lift heavy books?
 #'     * 1, Easy | 2, A little hard | 3, Very hard | 4, Can't do at all | 5, Too young for this activity
@@ -370,7 +370,7 @@
 #' Example Adolescent Self-Reported Outcome Data Collection Instrument (PODCI) Data
 #'
 #' @format
-#' A 3 x 83 [dplyr::tibble]
+#' A 10 x 83 [dplyr::tibble]
 #'
 #' 1. During the last week, was it easy or hard for you to: Lift heavy books?
 #'     * 1, Easy | 2, A little hard | 3, Very hard | 4, Can't do at all
