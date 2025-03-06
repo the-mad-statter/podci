@@ -1,4 +1,4 @@
-# nolint start: cyclocomp_linter,line_length_linter.
+# nolint start: line_length_linter.
 
 #' PODCI Normative Values
 #'

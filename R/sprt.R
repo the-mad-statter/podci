@@ -1,3 +1,30 @@
+utils::globalVariables(
+  c(
+    "Q26",
+    "Q27",
+    "Q36",
+    "Q42",
+    "Q43",
+    "Q44",
+    "Q49",
+    "Q50",
+    "Q51",
+    "Q52",
+    "Q56",
+    "Q57",
+    "Q58",
+    "Q59",
+    "Q60",
+    "Q62",
+    "Q63",
+    "Q65",
+    "Q66",
+    "Q69",
+    "Q70",
+    "Q73"
+  )
+)
+
 #' PODCI Sport Scores
 #'
 #' @param data a [dplyr::tibble] containing the PODCI sport item responses
@@ -143,7 +170,13 @@ podci_sprt <- function(
       dplyr::mutate(
         dplyr::across(
           dplyr::all_of(
-            paste0("Q", podci_items("sprt", patient, reporter, "primary"))
+            paste0(
+              "Q",
+              setdiff(
+                podci_items("sprt", patient, reporter, "primary"),
+                c(26, 27)
+              )
+            )
           ),
           ~ dplyr::if_else(. == 5, NA_real_, .)
         )
@@ -161,40 +194,36 @@ podci_sprt <- function(
           )
         )
       ),
-      dplyr::across(c(.data[["Q26"]], .data[["Q27"]]), ~ ((. - 1) * 3 / 4) + 1)
+      dplyr::across(c(Q26, Q27), ~ ((. - 1) * 3 / 4) + 1)
     )
 
   if (reporter == "prnt") {
     data <- data %>%
       dplyr::mutate(
         Q36 = dplyr::if_else(
-          .data[["Q36"]] == 4 & (.data[["Q42"]] %==% 1 | .data[["Q43"]] %==% 1),
+          Q36 == 4 & (Q42 %==% 1 | Q43 %==% 1),
           NA_real_,
-          .data[["Q36"]]
+          Q36
         ),
         Q44 = dplyr::if_else(
-          .data[["Q44"]] == 4 & (.data[["Q50"]] %==% 1 | .data[["Q51"]] %==% 1),
+          Q44 == 4 & (Q50 %==% 1 | Q51 %==% 1),
           NA_real_,
-          .data[["Q44"]]
+          Q44
         ),
         Q52 = dplyr::if_else(
-          .data[["Q52"]] == 4 & (.data[["Q58"]] %==% 1 | .data[["Q59"]] %==% 1),
+          Q52 == 4 & (Q58 %==% 1 | Q59 %==% 1),
           NA_real_,
-          .data[["Q52"]]
+          Q52
         ),
         Q60 = dplyr::if_else(
-          .data[["Q60"]] == 3 & .data[["Q65"]] %==% 1,
+          Q60 == 3 & Q65 %==% 1,
           NA_real_,
-          ((.data[["Q60"]] - 1) * 3 / 2) + 1
+          ((Q60 - 1) * 3 / 2) + 1
         ),
         Q66 = dplyr::if_else(
-          (.data[["Q66"]] == 4) |
-            (.data[["Q66"]] == 3 &
-              (.data[["Q72"]] %==% 1 |
-                .data[["Q73"]] %==% 1)
-            ),
+          (Q66 == 4) | (Q66 == 3 & (Q72 %==% 1 | Q73 %==% 1)), # nolint
           NA_real_,
-          ((.data[["Q66"]] - 1) * 3 / 2) + 1
+          ((Q66 - 1) * 3 / 2) + 1
         )
       )
   }
@@ -203,33 +232,29 @@ podci_sprt <- function(
     data <- data %>%
       dplyr::mutate(
         Q36 = dplyr::if_else(
-          .data[["Q36"]] == 4 & .data[["Q42"]] %==% 1,
+          Q36 == 4 & Q42 %==% 1,
           NA_real_,
-          .data[["Q36"]]
+          Q36
         ),
         Q43 = dplyr::if_else(
-          .data[["Q43"]] == 4 & .data[["Q49"]] %==% 1,
+          Q43 == 4 & Q49 %==% 1,
           NA_real_,
-          .data[["Q43"]]
+          Q43
         ),
         Q50 = dplyr::if_else(
-          .data[["Q50"]] == 4 & .data[["Q56"]] %==% 1,
+          Q50 == 4 & Q56 %==% 1,
           NA_real_,
-          .data[["Q50"]]
+          Q50
         ),
         Q57 = dplyr::if_else(
-          .data[["Q57"]] == 3 & .data[["Q62"]] %==% 1,
+          Q57 == 3 & Q62 %==% 1,
           NA_real_,
-          ((.data[["Q57"]] - 1) * 3 / 2) + 1
+          ((Q57 - 1) * 3 / 2) + 1
         ),
         Q63 = dplyr::if_else(
-          .data[["Q63"]] == 4 |
-            (.data[["Q63"]] == 3 &
-              (.data[["Q69"]] %==% 1 |
-                .data[["Q70"]] %==% 1)
-            ),
+          Q63 == 4 | (Q63 == 3 & (Q69 %==% 1 | Q70 %==% 1)), # nolint
           NA_real_,
-          ((.data[["Q63"]] - 1) * 3 / 2) + 1
+          ((Q63 - 1) * 3 / 2) + 1
         )
       )
   }
@@ -237,7 +262,7 @@ podci_sprt <- function(
   data <- data %>%
     dplyr::mutate(
       raw = dplyr::if_else(
-        .data[["n_obs"]] >= 6,
+        n_obs >= 6,
         sum(
           dplyr::c_across(
             dplyr::all_of(
@@ -254,7 +279,7 @@ podci_sprt <- function(
     data <- data %>%
       dplyr::mutate(
         mean = dplyr::if_else(
-          .data[["n_obs"]] >= 6,
+          n_obs >= 6,
           mean(
             dplyr::c_across(
               dplyr::all_of(
@@ -270,12 +295,12 @@ podci_sprt <- function(
 
   if (score %in% c("stnd", "norm")) {
     data <- data %>%
-      dplyr::mutate(stnd = ((4 - .data[["mean"]]) / 3) * 100)
+      dplyr::mutate(stnd = ((4 - mean) / 3) * 100)
   }
 
   if (score == "norm") {
     data <- data %>%
-      dplyr::mutate(norm = 10 * ((.data[["stnd"]] - norm_m) / norm_s) + 50)
+      dplyr::mutate(norm = 10 * ((stnd - norm_m) / norm_s) + 50)
   }
 
   data %>%

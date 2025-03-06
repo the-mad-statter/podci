@@ -1,7 +1,7 @@
 Package: podci
 Type: Package
 Title: Scoring for the Pediatric Outcomes Data Collection Instrument (PODCI)
-Version: 2.0.0
+Version: 2.1.0
 Authors@R: 
     person(given = "Matthew",
            family = "Schuelke",
@@ -35,12 +35,11 @@ LazyData: true
 URL: https://github.com/the-mad-statter/podci
 BugReports: https://github.com/the-mad-statter/podci/issues
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 Imports: 
-    dplyr,
-    rlang
+    dplyr

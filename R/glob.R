@@ -1,3 +1,5 @@
+utils::globalVariables(c("stnd"))
+
 #' PODCI Global Scores
 #'
 #' @param data a [dplyr::tibble] containing the PODCI upper extremity,
@@ -43,7 +45,7 @@ podci_glob <- function(
 
   if (score == "norm") {
     data <- data %>%
-      dplyr::mutate(norm = 10 * ((.data[["stnd"]] - norm_m) / norm_s) + 50)
+      dplyr::mutate(norm = 10 * ((stnd - norm_m) / norm_s) + 50)
   }
 
   data %>%

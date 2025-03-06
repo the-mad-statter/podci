@@ -1,3 +1,5 @@
+utils::globalVariables(c("n_obs", "stnd"))
+
 #' PODCI Happy Scores
 #'
 #' @param data a [dplyr::tibble] containing the PODCI happy item responses
@@ -88,8 +90,8 @@ podci_hapy <- function(
     dplyr::mutate(
       n_obs = sum(!is.na(dplyr::c_across(dplyr::everything()))),
       raw = dplyr::if_else(
-        .data[["n_obs"]] >= 3,
-        sum(dplyr::c_across(-.data[["n_obs"]]), na.rm = TRUE),
+        n_obs >= 3,
+        sum(dplyr::c_across(-n_obs), na.rm = TRUE),
         NA_real_
       )
     )
@@ -98,9 +100,9 @@ podci_hapy <- function(
     data <- data %>%
       dplyr::mutate(
         mean = dplyr::if_else(
-          .data[["n_obs"]] >= 3,
+          n_obs >= 3,
           mean(
-            dplyr::c_across(-c(.data[["n_obs"]], .data[["raw"]])),
+            dplyr::c_across(-c(n_obs, raw)),
             na.rm = TRUE
           ),
           NA_real_
@@ -110,12 +112,12 @@ podci_hapy <- function(
 
   if (score %in% c("stnd", "norm")) {
     data <- data %>%
-      dplyr::mutate(stnd = ((5 - .data[["mean"]]) / 4) * 100)
+      dplyr::mutate(stnd = ((5 - mean) / 4) * 100)
   }
 
   if (score == "norm") {
     data <- data %>%
-      dplyr::mutate(norm = 10 * ((.data[["stnd"]] - norm_m) / norm_s) + 50)
+      dplyr::mutate(norm = 10 * ((stnd - norm_m) / norm_s) + 50)
   }
 
   data %>%

@@ -12,7 +12,7 @@
   } else if (is.na(lhs) && is.na(rhs)) {
     TRUE
   } else {
-    return(lhs == rhs)
+    lhs == rhs
   }
 }
 

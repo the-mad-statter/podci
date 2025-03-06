@@ -9,7 +9,7 @@
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![](https://img.shields.io/badge/devel%20version-2.0.0-yellow.svg)](https://github.com/the-mad-statter/podci)
+[![](https://img.shields.io/badge/devel%20version-2.1.0-yellow.svg)](https://github.com/the-mad-statter/podci)
 [![](https://img.shields.io/github/last-commit/the-mad-statter/podci.svg)](https://github.com/the-mad-statter/podci/commits/main)
 [![License: GPL (\>=
 3)](https://img.shields.io/badge/license-GPL%20(%3E=%203)-blue.svg)](https://cran.r-project.org/web/licenses/GPL%20(%3E=%203))
@@ -19,7 +19,7 @@ status](https://github.com/the-mad-statter/podci/workflows/Style/badge.svg)](htt
 status](https://github.com/the-mad-statter/podci/workflows/lint/badge.svg)](https://github.com/the-mad-statter/podci/actions)
 [![R build
 status](https://github.com/the-mad-statter/podci/workflows/test-coverage/badge.svg)](https://github.com/the-mad-statter/podci/actions)
-[![](https://codecov.io/gh/the-mad-statter/podci/branch/main/graph/badge.svg)](https://codecov.io/gh/the-mad-statter/podci)
+[![](https://codecov.io/gh/the-mad-statter/podci/branch/main/graph/badge.svg)](https://app.codecov.io/gh/the-mad-statter/podci)
 [![R build
 status](https://github.com/the-mad-statter/podci/workflows/R-CMD-check/badge.svg)](https://github.com/the-mad-statter/podci/actions)
 <!-- badges: end -->

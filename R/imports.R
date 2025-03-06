@@ -12,15 +12,3 @@
 #' @param rhs A function call using the magrittr semantics.
 #' @return The result of calling `rhs(lhs)`.
 NULL
-
-#' .data pronoun
-#'
-#' See `rlang::[.data][rlang::.data]` for details.
-#'
-#' @name .data
-#' @rdname dot-data
-#' @keywords internal
-#' @export
-#' @importFrom rlang .data
-#' @inherit rlang::.data description
-NULL

@@ -1,3 +1,5 @@
+utils::globalVariables(c("Q34", "Q35"))
+
 #' PODCI Transfer Scores
 #'
 #' @param data a [dplyr::tibble] containing the PODCI transfer item responses
@@ -106,7 +108,8 @@ podci_tran <- function(
     data <- data %>%
       dplyr::mutate(
         dplyr::across(
-          dplyr::everything(), ~ dplyr::if_else(. == 5, NA_real_, .)
+          -c(Q34, Q35),
+          ~ dplyr::if_else(. == 5, NA_real_, .)
         ),
       )
   }
@@ -114,10 +117,10 @@ podci_tran <- function(
   data <- data %>%
     dplyr::mutate(
       n_obs = sum(!is.na(dplyr::c_across(dplyr::everything()))),
-      dplyr::across(c(.data[["Q34"]], .data[["Q35"]]), ~ ((. - 1) * 3 / 4) + 1),
+      dplyr::across(c(Q34, Q35), ~ ((. - 1) * 3 / 4) + 1),
       raw = dplyr::if_else(
-        .data[["n_obs"]] >= 7,
-        sum(dplyr::across(-.data[["n_obs"]]), na.rm = TRUE),
+        n_obs >= 7,
+        sum(dplyr::across(-n_obs), na.rm = TRUE),
         NA_real_
       )
     )
@@ -126,9 +129,9 @@ podci_tran <- function(
     data <- data %>%
       dplyr::mutate(
         mean = dplyr::if_else(
-          .data[["n_obs"]] >= 7,
+          n_obs >= 7,
           mean(
-            dplyr::c_across(-c(.data[["n_obs"]], .data[["raw"]])),
+            dplyr::c_across(-c(n_obs, raw)),
             na.rm = TRUE
           ),
           NA_real_
@@ -138,12 +141,12 @@ podci_tran <- function(
 
   if (score %in% c("stnd", "norm")) {
     data <- data %>%
-      dplyr::mutate(stnd = ((4 - .data[["mean"]]) / 3) * 100)
+      dplyr::mutate(stnd = ((4 - mean) / 3) * 100)
   }
 
   if (score == "norm") {
     data <- data %>%
-      dplyr::mutate(norm = 10 * ((.data[["stnd"]] - norm_m) / norm_s) + 50)
+      dplyr::mutate(norm = 10 * ((stnd - norm_m) / norm_s) + 50)
   }
 
   data %>%

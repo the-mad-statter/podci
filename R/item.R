@@ -1,5 +1,3 @@
-# nolint start: cyclocomp_linter.
-
 #' PODCI Scale Item Numbers
 #'
 #' @param scale requested scale
@@ -88,5 +86,3 @@ podci_items <- function(
       unlist()
   }
 }
-
-# nolint end

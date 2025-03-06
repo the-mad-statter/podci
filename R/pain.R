@@ -1,3 +1,5 @@
+utils::globalVariables(c("Q17", "Q72", "Q75", "n_obs", "stnd"))
+
 #' PODCI Pain Scores
 #'
 #' @param data a [dplyr::tibble] containing the PODCI pain item responses
@@ -65,20 +67,20 @@ podci_pain <- function(
     dplyr::rowwise() %>%
     dplyr::mutate(
       n_obs = sum(!is.na(dplyr::c_across(dplyr::everything()))),
-      Q17 = ((4 - .data[["Q17"]]) * 4 / 3) + 1
+      Q17 = ((4 - Q17) * 4 / 3) + 1
     )
 
   if (reporter == "prnt") {
-    data <- data %>% dplyr::mutate(Q75 = ((.data[["Q75"]] - 1) * 4 / 5) + 1)
+    data <- data %>% dplyr::mutate(Q75 = ((Q75 - 1) * 4 / 5) + 1)
   } else {
-    data <- data %>% dplyr::mutate(Q72 = ((.data[["Q72"]] - 1) * 4 / 5) + 1)
+    data <- data %>% dplyr::mutate(Q72 = ((Q72 - 1) * 4 / 5) + 1)
   }
 
   data <- data %>%
     dplyr::mutate(
       raw = dplyr::if_else(
-        .data[["n_obs"]] >= 2,
-        sum(dplyr::c_across(-.data[["n_obs"]]), na.rm = TRUE),
+        n_obs >= 2,
+        sum(dplyr::c_across(-n_obs), na.rm = TRUE),
         NA_real_
       )
     )
@@ -87,9 +89,9 @@ podci_pain <- function(
     data <- data %>%
       dplyr::mutate(
         mean = dplyr::if_else(
-          .data[["n_obs"]] >= 2,
+          n_obs >= 2,
           mean(
-            dplyr::c_across(-c(.data[["n_obs"]], .data[["raw"]])),
+            dplyr::c_across(-c(n_obs, raw)),
             na.rm = TRUE
           ),
           NA_real_
@@ -99,12 +101,12 @@ podci_pain <- function(
 
   if (score %in% c("stnd", "norm")) {
     data <- data %>%
-      dplyr::mutate(stnd = ((4 - (.data[["mean"]] - 1)) / 4) * 100)
+      dplyr::mutate(stnd = ((4 - (mean - 1)) / 4) * 100)
   }
 
   if (score == "norm") {
     data <- data %>%
-      dplyr::mutate(norm = 10 * ((.data[["stnd"]] - norm_m) / norm_s) + 50)
+      dplyr::mutate(norm = 10 * ((stnd - norm_m) / norm_s) + 50)
   }
 
   data %>%
